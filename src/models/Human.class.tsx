@@ -1,4 +1,4 @@
-import Movie from "./Movie";
+import Movie from "./Movie.class";
 
 export default class Human{
     private id: number;

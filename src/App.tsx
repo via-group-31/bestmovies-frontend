@@ -1,6 +1,7 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
+import UserService from './services/User.service';
 
 function App() {
   return (
