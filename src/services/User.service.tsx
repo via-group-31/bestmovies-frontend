@@ -1,5 +1,7 @@
 import axios from "axios";
 import Users from "../models/Users.class";
+import * as dotenv from "dotenv";
+dotenv.config();
 
 export default class UserService{
     public async loginUser(username: string, password: string): Promise<Users>{
