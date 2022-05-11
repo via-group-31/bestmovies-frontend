@@ -3,6 +3,8 @@ import logo from './logo.svg';
 import './App.css';
 import UserService from './services/User.service';
 import { Route, Routes } from 'react-router-dom';
+import MainPage from './pages/Main.page';
+import Navbar from './components/Navbar.component';
 
 function App() {
   // return (
@@ -25,10 +27,14 @@ function App() {
   // );
 
   return (
+    <>
+    <Navbar />
+    
     <Routes>
-      <Route path='/' element={<div>Main Page</div>} />
+      <Route path='/' element={<MainPage />} />
       <Route path='*' element={<div>404</div>} />
     </Routes>
+    </>
   );
 }
 
