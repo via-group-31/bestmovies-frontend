@@ -23,7 +23,6 @@ function Card(props: CardProps){
       }
     
       return (
-        <Link style={{ textDecoration: 'none' }}>
             <Box maxW='sm' borderRadius='lg' overflow='hidden' mb="8">
             <Image src={property.imageUrl} alt={property.imageAlt} />
                
@@ -58,14 +57,17 @@ function Card(props: CardProps){
                 <Box as='span' ml='2' color='gray.600' fontSize='sm'>
                     {props.averageRating} 
                 </Box>
+                    
+                <Link as="div" style={{ textDecoration: 'none', display: 'inline-block' }}  marginLeft="auto">
 
-                <Box ml='2' color='gray.600' fontSize='sm'  marginLeft="auto">
-                   Read more <ArrowForwardIcon/>
-                </Box>
+                    <Box  ml='2' color='gray.600' fontSize='sm'  marginLeft="auto">
+                    Read more <ArrowForwardIcon/>
+                    </Box>
+                </Link>
+
                 </Box>
             </Box>
             </Box>
-        </Link>
       )
 }
 
