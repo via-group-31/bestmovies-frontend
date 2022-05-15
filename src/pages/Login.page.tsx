@@ -47,7 +47,7 @@ function LoginPage() {
                     });
                 }
                 else{
-                    console.log(user.getAccessToken());
+                    console.log(user.accessToken);
                 }
                 setButtonLoading(false);
             });

@@ -13,7 +13,7 @@ function App() {
   //TODO: open favorites only if cookies are set (user logged in)
   return (
     <>
-    <Navbar title='Best Movies' loggedIn={false} />
+    <Navbar title='Best Movies' loggedIn={true} />
 
     <Divider color={blue} />
     <Box h={defaultPadding} />

@@ -1,37 +1,37 @@
 export default class Human{
-    private id: number;
-    private name: string;
-    private birth: number;
+    private _id: number;
+    private _name: string;
+    private _birth: number;
 
     constructor(id: number, name: string, birth: number){
-        this.id = id;
-        this.name = name;
-        this.birth = birth;
+        this._id = id;
+        this._name = name;
+        this._birth = birth;
     }
 
     /* GETTERS */
-    public getId(): number{
-        return this.id;
+    public get id(): number{
+        return this._id;
     }
 
-    public getName(): string{
-        return this.name;
+    public get name(): string{
+        return this._name;
     }
 
-    public getBirth(): number{
-        return this.birth;
+    public get birth(): number{
+        return this._birth;
     }
 
     /* SETTERS */
-    public setId(id: number): void{
-        this.id = id
+    public set id(id: number){
+        this._id = id
     }
 
-    public setName(name: string): void{
-        this.name = name;
+    public set name(name: string){
+        this._name = name;
     }
 
-    public setBirth(birth: number): void{
-        this.birth = birth;
+    public set birth(birth: number){
+        this._birth = birth;
     }
 }

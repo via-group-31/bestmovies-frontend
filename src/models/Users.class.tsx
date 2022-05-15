@@ -1,27 +1,27 @@
 export default class Users{
-    private userID?: number;
-    private username?: string;
-    private email?: string;
-    private accessToken: string;
+    private _userID?: number;
+    private _username?: string;
+    private _email?: string;
+    private _accessToken: string;
 
     constructor(accessToken: string){
-        this.accessToken = accessToken;
+        this._accessToken = accessToken;
     }
 
     /* GETTERS */
-    public getUserID(): number | undefined{
-        return this.userID;
+    public get UserID(): number | undefined{
+        return this._userID;
     }
 
-    public getUsername(): string | undefined{
-        return this.username;
+    public get username(): string | undefined{
+        return this._username;
     }
 
-    public getEmail(): string | undefined{
-        return this.email;
+    public get email(): string | undefined{
+        return this._email;
     }
 
-    public getAccessToken(): string{
-        return this.accessToken;
+    public get accessToken(): string{
+        return this._accessToken;
     }
 }

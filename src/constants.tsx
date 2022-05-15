@@ -1,5 +1,5 @@
 /* API */
-export const apiURL: string = "https://api-nodejs-todolist.herokuapp.com";
+export const apiURL: string = "https://sep6bestmovies.azurewebsites.net";
 
 /* DESIGN */
 export const blue: string = "#8AB8FE";

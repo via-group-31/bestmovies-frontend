@@ -38,27 +38,27 @@ function Navbar(props: NavbarProps) {
                             <AutoCompleteList>
                                  {movies.map((movie, mid) => {
                                      const routeChange = () =>{ 
-                                       let path = `/movie/${movie.getMovieID()}`; 
+                                       let path = `/movie/${movie.movieID}`; 
                                        navigate(path);
                                      }
 
                                      return (
                                         <AutoCompleteItem
                                             key={`option-${mid}`}
-                                            value={movie.getTitle()}
+                                            value={movie.title}
                                             textTransform="capitalize"
                                             align="center"
                                             onClick={routeChange}
                                         >
                                             <Grid h='200px' gap={4} templateRows='repeat(2, 1fr)' templateColumns='repeat(4, 1fr)'>
                                                 <GridItem rowSpan={2} colSpan={1}>
-                                                    <Image src={movie.getImage()} h="200px" objectFit="cover" />
+                                                    <Image src={movie.image} h="200px" objectFit="cover" />
                                                 </GridItem>
                                                 <GridItem colSpan={2}>
-                                                    <Text fontSize="2xl">{movie.getTitle()}</Text>
+                                                    <Text fontSize="2xl">{movie.title}</Text>
                                                 </GridItem>
                                                 <GridItem colSpan={2}>
-                                                    {movie.getActors().map(actor => actor.getName() +", ")}
+                                                    {movie.actors.map(actor => actor.name +", ")}
                                                 </GridItem>
                                             </Grid>
                                         </AutoCompleteItem>
