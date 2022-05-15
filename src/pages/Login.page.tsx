@@ -1,69 +1,77 @@
-import { Box, Button, Center, Container, FormControl, FormErrorMessage, FormLabel, Input, Text } from "@chakra-ui/react";
-import { useState } from "react";
+import { Box, Button, Center, Container, FormControl, FormErrorMessage, FormLabel, Input, Text, toast } from "@chakra-ui/react";
+import { useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import { black, defaultPadding, white, blue, darkBlue } from "../constants";
+import UserService from "../services/User.service";
 
 function LoginPage() {
 
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+    const userService: UserService = new UserService();
 
-    const [emailError, setEmailError] = useState(false);
-    const [passwordError, setPasswordError] = useState(false);
+    const emailRef = useRef<HTMLInputElement>(null);
+    const passwordRef = useRef<HTMLInputElement>(null);
 
-    const [emailErrorMsg, setEmailErrorMsg] = useState('');
-    const [passwordErrorMsg, setPasswordErrorMsg] = useState('');
+    const [valid, setValid] = useState({ emailErr: '', passwordErr: '' });
 
-    //TODO: Add email check and required fields
+    const [buttonLoading, setButtonLoading] = useState(false);
+
+    const handleValidation = () => {
+        let emailMsg = ''
+        let passwordMsg = ''
+
+        const emailRegex = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+
+        if (!emailRef.current?.value.match(emailRegex)?.length === undefined)
+            emailMsg = "Email is in invalid format"
+        if (passwordRef.current?.value !== undefined && passwordRef.current.value.length < 6)
+            passwordMsg = "Password must have at least 6 characters"
+
+        setValid({
+            emailErr: emailMsg,
+            passwordErr: passwordMsg
+        })
+        return (passwordMsg === '' && emailMsg === '')
+    }
+
+    const handleLogin = () => {
+        if (handleValidation() && emailRef.current?.value && passwordRef.current?.value) {
+            setButtonLoading(true);
+            userService.loginUser(emailRef.current.value, passwordRef.current.value).then((user) => {
+                if(user == null){
+                    setValid({
+                        emailErr: 'Wrong username or password',
+                        passwordErr: ''
+                    });
+                }
+                else{
+                    console.log(user.getAccessToken());
+                }
+                setButtonLoading(false);
+            });
+        }
+    };
+    
     return ( 
         <Container maxW="container.sm">
             <Box bg={white} width="100%" h="auto" borderRadius={10} color={black} p={defaultPadding}>
-                <FormControl isRequired isInvalid={emailError} pb={defaultPadding/4}>
+                <FormControl isRequired isInvalid={valid.emailErr.length != 0} pb={defaultPadding/4}>
                     <FormLabel htmlFor='email'>Email address</FormLabel>
-                    <Input id='email' type='email' onChange={(value) => setEmail(value.target.value)} />
-                    {emailError ? <FormErrorMessage>{ emailErrorMsg }</FormErrorMessage> : null}
+                    <Input id='email' type='email' ref={emailRef} />
+                    {valid.emailErr.length != 0  ? <FormErrorMessage>{ valid.emailErr }</FormErrorMessage> : null}
                 </FormControl>
 
-                <FormControl isRequired isInvalid={passwordError} pb={defaultPadding/4}>
+                <FormControl isRequired isInvalid={valid.passwordErr.length != 0} pb={defaultPadding/4}>
                     <FormLabel htmlFor='password'>Password</FormLabel>
-                    <Input id='password' type='password' onChange={(value) => setPassword(value.target.value)} />
-                    {passwordError ? <FormErrorMessage>{ passwordErrorMsg }</FormErrorMessage> : null}
+                    <Input id='password' type='password' ref={passwordRef} />
+                    {valid.passwordErr.length != 0 ? <FormErrorMessage>{ valid.passwordErr }</FormErrorMessage> : null}
                 </FormControl>
 
                 <Center pt={defaultPadding}>
                     <Button bg={blue} color={white} _hover={{bg: darkBlue }}
-                    onClick={() => {
-                        const emailRegex = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
-                        if(email.match(emailRegex)?.length == undefined){
-                            setEmailError(true);
-                            setEmailErrorMsg('Email is in invalid format');
-                        }
-                        else{
-                            setEmailError(false);
-                        }
-                        
-                        if(email.length <= 0){
-                            setEmailError(true);
-                            setEmailErrorMsg('Email field is required')
-                        }
-                        else{
-                            setEmailError(false);
-                        }
-
-                        if(password.length < 6){
-                            setPasswordError(true);
-                            setPasswordErrorMsg('Password must have at least 6 characters')
-                        }
-                        else{
-                            setPasswordError(false);
-                        }
-
-                        if(!emailError && !passwordError){
-                            console.log("Everything is good");
-                        }
-                    }}
+                    isLoading={buttonLoading} loadingText="Signing in"
+                    onClick={handleLogin}
                     >
-                        Sign Up
+                        Sign In
                     </Button>
                 </Center>
 

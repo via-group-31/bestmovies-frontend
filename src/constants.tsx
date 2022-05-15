@@ -1,5 +1,5 @@
 /* API */
-export const apiURL: string = "http://localhost:8080/api";
+export const apiURL: string = "https://api-nodejs-todolist.herokuapp.com";
 
 /* DESIGN */
 export const blue: string = "#8AB8FE";
