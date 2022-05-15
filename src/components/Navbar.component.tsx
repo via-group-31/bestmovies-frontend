@@ -71,15 +71,7 @@ function Navbar(props: NavbarProps) {
                     </FormControl>
                 </GridItem>
                 <GridItem pr={defaultPadding/2} pt={2} textAlign="right"  alignItems="center" >
-                    
-                    <Box display="flex" ml="auto" justifyContent="end" gap="8" alignItems="center">
-                        <Box display="flex" alignItems="center"> 
-                             Your favorites 
-                             <StarIcon/>
-                        </Box>
-                   
                     { props.loggedIn ? <NavbarAvatar /> : <Text><Link to="/login">Sign in</Link></Text> }
-                    </Box>
                 </GridItem>
                 
             </SimpleGrid >
