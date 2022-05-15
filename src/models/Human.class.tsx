@@ -1,16 +1,12 @@
-import Movie from "./Movie.class";
-
 export default class Human{
     private id: number;
     private name: string;
     private birth: number;
-    private movies: Movie[];
 
     constructor(id: number, name: string, birth: number){
         this.id = id;
         this.name = name;
         this.birth = birth;
-        this.movies = [];
     }
 
     /* GETTERS */
@@ -26,10 +22,6 @@ export default class Human{
         return this.birth;
     }
 
-    public getMovies(): Movie[]{
-        return this.movies;
-    }
-
     /* SETTERS */
     public setId(id: number): void{
         this.id = id
@@ -41,9 +33,5 @@ export default class Human{
 
     public setBirth(birth: number): void{
         this.birth = birth;
-    }
-
-    public addMovieToHuman(movie: Movie): void{
-        this.movies?.push(movie);
     }
 }
