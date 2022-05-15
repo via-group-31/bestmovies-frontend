@@ -9,7 +9,6 @@ export default class Human{
         this._birth = birth;
     }
 
-    /* GETTERS */
     public get id(): number{
         return this._id;
     }
@@ -21,8 +20,7 @@ export default class Human{
     public get birth(): number{
         return this._birth;
     }
-
-    /* SETTERS */
+    
     public set id(id: number){
         this._id = id
     }

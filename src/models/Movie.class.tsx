@@ -35,7 +35,6 @@ export default class Movie{
         return this._actors;
     }
 
-    /* SETTERS */
     public set movieID(movieID: number){
         this._movieID = movieID;
     }
@@ -56,7 +55,7 @@ export default class Movie{
         this._actors = actors;
     }
 
-    // public addActor(actor: Human): void{
-    //     this.actors.push(actor);
-    // }
+    public addActor(actor: Human): void{
+        this.actors.push(actor);
+    }
 }
