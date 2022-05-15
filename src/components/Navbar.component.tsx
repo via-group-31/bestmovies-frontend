@@ -1,7 +1,10 @@
 import { SearchIcon } from "@chakra-ui/icons";
-import { Avatar, Box, Grid, GridItem, Input, InputGroup, InputRightElement, Menu, MenuButton, MenuItem, MenuList, Text } from "@chakra-ui/react";
-import { Link } from "react-router-dom";
-import { black, blue, darkBlue, white } from "../constants";
+import { Avatar, Box, SimpleGrid , GridItem, MenuList, Text, FormControl, Menu, MenuButton, MenuItem, Image, Grid, Center } from "@chakra-ui/react";
+import { AutoComplete, AutoCompleteInput, AutoCompleteItem, AutoCompleteList } from "@choc-ui/chakra-autocomplete";
+import { Link, useNavigate } from "react-router-dom";
+import { black, blue, darkBlue, defaultPadding, white } from "../constants";
+import Human from "../models/Human.class";
+import Movie from "../models/Movie.class";
 
 type NavbarProps = {
     title: string,
@@ -9,25 +12,68 @@ type NavbarProps = {
 };
 
 function Navbar(props: NavbarProps) {
+
+    let navigate = useNavigate(); 
+
+    const actors: Human[] = [];
+    actors.push(new Human(1, "John Doe", 20));
+    actors.push(new Human(2, "Jane Doe", 21));
+    actors.push(new Human(3, "Bob Bobber", 22));
+
+    const movies: Movie[] = [];
+    movies.push(new Movie(1, "Pulp fiction", 1994, "https://i-viaplay-com.akamaized.net/viaplay-prod/771/672/1473257890-66ec43721fe0fd0073af100473a09da74924816c.jpg?width=400&height=600", actors));
+    movies.push(new Movie(2, "Avatar 2", 2023, "https://www.kino.dk/sites/default/files/styles/k_poster_big/public/movie-posters/avatar2plakat.jpg?itok=A_IsQnnZ", actors));
+    movies.push(new Movie(3, "Doctor Strange 2", 2022, "https://preview.redd.it/idmatrlv8af81.jpg?auto=webp&s=ce52969c3a401eb4b8806b1b8cefb8f67b3b9080", actors));
+
     return ( 
         <Box bg={darkBlue} w='100%' p={4} color='white'>
-            <Grid templateColumns='repeat(3, 1fr)'>
-                <GridItem pl={10} pt={2}>
+            <SimpleGrid columns={3}>
+                <GridItem pl={defaultPadding/3} pt={2}>
                     <Text color={blue} fontWeight="bold">
                         <Link to="/">{ props.title }</Link>
                     </Text>
                 </GridItem>
                 <GridItem>
-                    <InputGroup>
-                        <Input placeholder='Search' size='md' variant='outline' bg={white} color={black} />
-                        <InputRightElement children={<SearchIcon color={black} />} />
-                        <span>dpici</span>
-                    </InputGroup>
+                    <FormControl id="movie" w="100%" color={black}>
+                        <AutoComplete>
+                            <AutoCompleteInput placeholder="Search" bgColor={white} />
+                            <AutoCompleteList>
+                                 {movies.map((movie, mid) => {
+                                     const routeChange = () =>{ 
+                                       let path = `/movie/${movie.getMovieID()}`; 
+                                       navigate(path);
+                                     }
+
+                                     return (
+                                        <AutoCompleteItem
+                                            key={`option-${mid}`}
+                                            value={movie.getTitle()}
+                                            textTransform="capitalize"
+                                            align="center"
+                                            onClick={routeChange}
+                                        >
+                                            <Grid h='200px' gap={4} templateRows='repeat(2, 1fr)' templateColumns='repeat(4, 1fr)'>
+                                                <GridItem rowSpan={2} colSpan={1}>
+                                                    <Image src={movie.getImage()} h="200px" />
+                                                </GridItem>
+                                                <GridItem colSpan={2}>
+                                                    <Text fontSize="2xl">{movie.getTitle()}</Text>
+                                                </GridItem>
+                                                <GridItem colSpan={2}>
+                                                    {movie.getActors().map(actor => actor.getName() +", ")}
+                                                </GridItem>
+                                            </Grid>
+                                        </AutoCompleteItem>
+                                    );
+                                 })}
+                            </AutoCompleteList>
+                        </AutoComplete>
+                    </FormControl>
                 </GridItem>
-                <GridItem pr={10} pt={2} textAlign="right">
+                <GridItem pr={defaultPadding/2} pt={2} textAlign="right">
                     { props.loggedIn ? <NavbarAvatar /> : <Text><Link to="/login">Sign in</Link></Text> }
                 </GridItem>
-            </Grid>
+            </SimpleGrid >
         </Box>
     );
 }
