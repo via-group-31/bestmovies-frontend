@@ -21,6 +21,7 @@ function Navbar(props: NavbarProps) {
                     <InputGroup>
                         <Input placeholder='Search' size='md' variant='outline' bg={white} color={black} />
                         <InputRightElement children={<SearchIcon color={black} />} />
+                        <span>dpici</span>
                     </InputGroup>
                 </GridItem>
                 <GridItem pr={10} pt={2} textAlign="right">
