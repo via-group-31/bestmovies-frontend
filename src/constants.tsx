@@ -5,3 +5,5 @@ export const purple: string = "#4B006E";
 
 export const white: string = "#ffffff";
 export const black: string = "#000000";
+
+export const defaultPadding: number = 12;

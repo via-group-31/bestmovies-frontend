@@ -1,10 +1,12 @@
-import Navbar from "../components/Navbar.component";
+import { Container, Text } from "@chakra-ui/react";
 
 function MainPage() {
     return ( 
-        <>
-            Main page
-        </> 
+        <Container maxW='container.xl'>
+            <Text>
+                Main Page
+            </Text>
+        </Container>
     );
 }
 
