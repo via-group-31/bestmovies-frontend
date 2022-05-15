@@ -11,7 +11,7 @@ function FavoritePage() {
                    <Text>tiles</Text>
                </Flex>
 
-               <Grid templateColumns='repeat(3, 1fr)'>
+               <Grid templateColumns='repeat(3, 1fr)' gap="2">
 
                {Array(5)
                 .fill("")

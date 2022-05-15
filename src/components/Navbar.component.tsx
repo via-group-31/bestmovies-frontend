@@ -5,7 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { black, blue, darkBlue, defaultPadding, white } from "../constants";
 import Human from "../models/Human.class";
 import Movie from "../models/Movie.class";
-
+import StarIcon from "../assets/StarIcon.component"
 type NavbarProps = {
     title: string,
     loggedIn: boolean
@@ -27,7 +27,7 @@ function Navbar(props: NavbarProps) {
 
     return ( 
         <Box bg={darkBlue} w='100%' p={4} color='white'>
-            <SimpleGrid columns={3}>
+            <SimpleGrid columns={3} alignItems="center">
                 <GridItem pl={defaultPadding/3} pt={2}>
                     <Text color={blue} fontWeight="bold">
                         <Link to="/">{ props.title }</Link>
@@ -54,7 +54,7 @@ function Navbar(props: NavbarProps) {
                                         >
                                             <Grid h='200px' gap={4} templateRows='repeat(2, 1fr)' templateColumns='repeat(4, 1fr)'>
                                                 <GridItem rowSpan={2} colSpan={1}>
-                                                    <Image src={movie.getImage()} h="200px" />
+                                                    <Image src={movie.getImage()} h="200px" objectFit="cover" />
                                                 </GridItem>
                                                 <GridItem colSpan={2}>
                                                     <Text fontSize="2xl">{movie.getTitle()}</Text>
@@ -70,9 +70,18 @@ function Navbar(props: NavbarProps) {
                         </AutoComplete>
                     </FormControl>
                 </GridItem>
-                <GridItem pr={defaultPadding/2} pt={2} textAlign="right">
+                <GridItem pr={defaultPadding/2} pt={2} textAlign="right"  alignItems="center" >
+                    
+                    <Box display="flex" ml="auto" justifyContent="end" gap="8" alignItems="center">
+                        <Box display="flex" alignItems="center"> 
+                             Your favorites 
+                             <StarIcon/>
+                        </Box>
+                   
                     { props.loggedIn ? <NavbarAvatar /> : <Text><Link to="/login">Sign in</Link></Text> }
+                    </Box>
                 </GridItem>
+                
             </SimpleGrid >
         </Box>
     );
