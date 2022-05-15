@@ -1,4 +1,4 @@
-import { Box, Button, Center, Container, FormControl, FormErrorMessage, FormLabel, Input, Text, toast } from "@chakra-ui/react";
+import { Box, Button, Center, Container, FormControl, FormErrorMessage, FormLabel, Input, Text } from "@chakra-ui/react";
 import { useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import { black, defaultPadding, white, blue, darkBlue } from "../constants";
@@ -57,16 +57,16 @@ function LoginPage() {
     return ( 
         <Container maxW="container.sm">
             <Box bg={white} width="100%" h="auto" borderRadius={10} color={black} p={defaultPadding}>
-                <FormControl isRequired isInvalid={valid.emailErr.length != 0} pb={defaultPadding/4}>
+                <FormControl isRequired isInvalid={valid.emailErr.length !== 0} pb={defaultPadding/4}>
                     <FormLabel htmlFor='email'>Email address</FormLabel>
                     <Input id='email' type='email' ref={emailRef} />
-                    {valid.emailErr.length != 0  ? <FormErrorMessage>{ valid.emailErr }</FormErrorMessage> : null}
+                    {valid.emailErr.length !== 0  ? <FormErrorMessage>{ valid.emailErr }</FormErrorMessage> : null}
                 </FormControl>
 
-                <FormControl isRequired isInvalid={valid.passwordErr.length != 0} pb={defaultPadding/4}>
+                <FormControl isRequired isInvalid={valid.passwordErr.length !== 0} pb={defaultPadding/4}>
                     <FormLabel htmlFor='password'>Password</FormLabel>
                     <Input id='password' type='password' ref={passwordRef} />
-                    {valid.passwordErr.length != 0 ? <FormErrorMessage>{ valid.passwordErr }</FormErrorMessage> : null}
+                    {valid.passwordErr.length !== 0 ? <FormErrorMessage>{ valid.passwordErr }</FormErrorMessage> : null}
                 </FormControl>
 
                 <Center pt={defaultPadding}>

@@ -1,11 +1,9 @@
-import { SearchIcon } from "@chakra-ui/icons";
-import { Avatar, Box, SimpleGrid , GridItem, MenuList, Text, FormControl, Menu, MenuButton, MenuItem, Image, Grid, Center } from "@chakra-ui/react";
+import { Avatar, Box, SimpleGrid , GridItem, MenuList, Text, FormControl, Menu, MenuButton, MenuItem, Image, Grid } from "@chakra-ui/react";
 import { AutoComplete, AutoCompleteInput, AutoCompleteItem, AutoCompleteList } from "@choc-ui/chakra-autocomplete";
 import { Link, useNavigate } from "react-router-dom";
 import { black, blue, darkBlue, defaultPadding, white } from "../constants";
 import Human from "../models/Human.class";
 import Movie from "../models/Movie.class";
-import StarIcon from "../assets/StarIcon.component"
 type NavbarProps = {
     title: string,
     loggedIn: boolean

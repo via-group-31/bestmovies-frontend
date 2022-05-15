@@ -60,22 +60,22 @@ function RegisterPage() {
     return ( 
         <Container maxW="container.sm">
             <Box bg={white} width="100%" h="auto" borderRadius={10} color={ black} p={ defaultPadding}>
-                <FormControl isRequired isInvalid={ valid.emailErr.length != 0 } pb={ defaultPadding/4 }>
+                <FormControl isRequired isInvalid={ valid.emailErr.length !== 0 } pb={ defaultPadding/4 }>
                     <FormLabel htmlFor='email'>Email address</FormLabel>
                     <Input id='email' type='email' ref={ emailRef } />
-                    {valid.emailErr.length != 0  ? <FormErrorMessage>{ valid.emailErr }</FormErrorMessage> : null}
+                    {valid.emailErr.length !== 0  ? <FormErrorMessage>{ valid.emailErr }</FormErrorMessage> : null}
                 </FormControl>
 
-                <FormControl isRequired isInvalid={valid.passwordErr.length != 0} pb={ defaultPadding/4 }>
+                <FormControl isRequired isInvalid={valid.passwordErr.length !== 0} pb={ defaultPadding/4 }>
                     <FormLabel htmlFor='password'>Password</FormLabel>
                     <Input id='password' type='password' ref={ passwordRef } />
-                    {valid.passwordErr.length != 0 ? <FormErrorMessage>{ valid.passwordErr }</FormErrorMessage> : null}
+                    {valid.passwordErr.length !== 0 ? <FormErrorMessage>{ valid.passwordErr }</FormErrorMessage> : null}
                 </FormControl>
 
-                <FormControl isRequired isInvalid={valid.passwordAgainErr.length != 0} pb={ defaultPadding/4 }>
+                <FormControl isRequired isInvalid={valid.passwordAgainErr.length !== 0} pb={ defaultPadding/4 }>
                     <FormLabel htmlFor='password-again'>Password Again</FormLabel>
                     <Input id='password-again' type='password' ref={ passwordAgainRef } />
-                    {valid.passwordAgainErr.length != 0 ? <FormErrorMessage>{ valid.passwordAgainErr }</FormErrorMessage> : null}
+                    {valid.passwordAgainErr.length !== 0 ? <FormErrorMessage>{ valid.passwordAgainErr }</FormErrorMessage> : null}
                 </FormControl>
 
                 <Center pt={defaultPadding}>
