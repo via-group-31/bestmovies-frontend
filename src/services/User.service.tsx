@@ -19,7 +19,8 @@ export default class UserService{
             return null;
         }
         
-        return new Users(token!);
+        //TODO: decypher token
+        return new Users(0, '', '', token);
     }
 
     public async registerUser(username: string, password: string): Promise<boolean>{
