@@ -7,6 +7,7 @@ import RegisterPage from './pages/Register.page';
 import FavoritePage from './pages/Favorite.page';
 import { Box, Divider } from '@chakra-ui/react';
 import { blue, defaultPadding } from './constants';
+import FourOhFour from './pages/404.page';
 
 function App() {
   //TODO: open favorites only if cookies are set (user logged in)
@@ -22,7 +23,7 @@ function App() {
       <Route path='/login' element={<LoginPage />} />
       <Route path='/register' element={<RegisterPage />} />
       <Route path='/favorites' element={<FavoritePage />} />
-      <Route path='*' element={<div>404</div>} />
+      <Route path='*' element={<FourOhFour />} />
     </Routes>
     </>
   );
