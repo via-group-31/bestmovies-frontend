@@ -8,12 +8,17 @@ import FavoritePage from './pages/Favorite.page';
 import { Box, Divider } from '@chakra-ui/react';
 import { blue, defaultPadding } from './constants';
 import FourOhFour from './pages/404.page';
+import UserService from './services/User.service';
+import { useCookies } from 'react-cookie';
 
 function App() {
-  //TODO: open favorites only if cookies are set (user logged in)
+
+  const userService = new UserService();
+  const [cookie, setCookie, remvoeCookie] = useCookies(['token']);
+
   return (
     <>
-    <Navbar title='Best Movies' loggedIn={true} />
+    <Navbar title='Best Movies' loggedIn={cookie.token !== undefined ? userService.isLoggedIn(cookie.token) : false} />
 
     <Divider color={blue} />
     <Box h={defaultPadding} />

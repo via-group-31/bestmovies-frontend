@@ -1,12 +1,18 @@
-import { Box, Button, Center, Container, FormControl, FormErrorMessage, FormLabel, Input, Text } from "@chakra-ui/react";
+import { Box, Button, Center, Container, FormControl, FormErrorMessage, FormLabel, Input, Text, useToast } from "@chakra-ui/react";
 import { useState, useRef } from "react";
-import { Link } from "react-router-dom";
+import { useCookies } from "react-cookie";
+import { Link, useNavigate } from "react-router-dom";
 import { black, defaultPadding, white, blue, darkBlue } from "../constants";
 import UserService from "../services/User.service";
 
 function LoginPage() {
 
     const userService: UserService = new UserService();
+
+    let navigate = useNavigate(); 
+    const [cookie, setCookie, remvoeCookie] = useCookies(['token']);
+
+    let toast = useToast();
 
     const emailRef = useRef<HTMLInputElement>(null);
     const passwordRef = useRef<HTMLInputElement>(null);
@@ -39,15 +45,26 @@ function LoginPage() {
     const handleLogin = () => {
         if (handleValidation() && emailRef.current?.value && passwordRef.current?.value) {
             setButtonLoading(true);
-            userService.loginUser(emailRef.current.value, passwordRef.current.value).then((user) => {
-                if(user == null){
+            userService.loginUser(emailRef.current.value, passwordRef.current.value).then((token) => {
+                setCookie("token", "token-test");
+                if(token == null){
                     setValid({
                         emailErr: 'Wrong username or password',
                         passwordErr: ''
                     });
                 }
                 else{
-                    console.log(user.accessToken);
+                    setCookie("token", token);
+                    
+                    toast({
+                        title: 'Logged in.',
+                        description: "You are now logged in.",
+                        status: 'success',
+                        duration: 9000,
+                        isClosable: true,
+                    });
+
+                    navigate("/");
                 }
                 setButtonLoading(false);
             });

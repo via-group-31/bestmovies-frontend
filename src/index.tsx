@@ -16,6 +16,8 @@ const theme = extendTheme({
       },
     }),
   },
+  initialColorMode: 'light',
+  useSystemColorMode: true,
 });
 
 ReactDOM.render(

@@ -1,9 +1,11 @@
 import { Avatar, Box, SimpleGrid , GridItem, MenuList, Text, FormControl, Menu, MenuButton, MenuItem, Image, Grid } from "@chakra-ui/react";
 import { AutoComplete, AutoCompleteInput, AutoCompleteItem, AutoCompleteList } from "@choc-ui/chakra-autocomplete";
+import { useCookies } from "react-cookie";
 import { Link, useNavigate } from "react-router-dom";
 import { black, blue, darkBlue, defaultPadding, white } from "../constants";
 import Human from "../models/Human.class";
 import Movie from "../models/Movie.class";
+import UserService from "../services/User.service";
 type NavbarProps = {
     title: string,
     loggedIn: boolean
@@ -78,12 +80,21 @@ function Navbar(props: NavbarProps) {
 }
 
 function NavbarAvatar () {
+
+    const [cookie, setCookie, remvoeCookie] = useCookies(['token']);
+    let navigate = useNavigate(); 
+
+    const logout = () => {
+        remvoeCookie("token");
+        navigate("/");
+    };
+
     return ( 
         <Menu>
             <MenuButton as={Avatar} boxSize="30px" ></MenuButton>
             <MenuList color={black}>
                 <MenuItem><Link to="/favorites">Favorites</Link></MenuItem>
-                <MenuItem onClick={ () => console.log("logout")}><Link to="/">Logout</Link></MenuItem>
+                <MenuItem onClick={ logout }><Link to="/">Logout</Link></MenuItem>
             </MenuList>
         </Menu>
      );

@@ -1,9 +1,8 @@
 import axios from "axios";
 import { apiURL } from "../constants";
-import Users from "../models/Users.class";
 
 export default class UserService{
-    public async loginUser(username: string, password: string): Promise<Users | null>{
+    public async loginUser(username: string, password: string): Promise<string | null>{
         let token: string;
         try{
             const response = await axios.post(`${apiURL}/user/login`, {
@@ -19,8 +18,7 @@ export default class UserService{
             return null;
         }
         
-        //TODO: decypher token
-        return new Users(0, '', '', token);
+        return token;
     }
 
     public async registerUser(username: string, password: string): Promise<boolean>{
@@ -36,6 +34,10 @@ export default class UserService{
             return false;
         }
         
+        return true;
+    }
+
+    public isLoggedIn(token: string): boolean{
         return true;
     }
 }

@@ -1,16 +1,20 @@
-import { Box, Button, Center, Container, FormControl, FormErrorMessage, FormLabel, Input, Text } from "@chakra-ui/react";
+import { Box, Button, Center, Container, FormControl, FormErrorMessage, FormLabel, Input, Text, useToast } from "@chakra-ui/react";
 import { useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { black, blue, darkBlue, defaultPadding, white } from "../constants";
 import UserService from "../services/User.service";
 
 function RegisterPage() {
 
     const userService: UserService = new UserService();
+    
+    let navigate = useNavigate();
 
     const emailRef = useRef<HTMLInputElement>(null);
     const passwordRef = useRef<HTMLInputElement>(null);
     const passwordAgainRef = useRef<HTMLInputElement>(null);
+
+    const toast = useToast();
 
     const [valid, setValid] = useState({ emailErr: '', passwordErr: '', passwordAgainErr: '' });
 
@@ -43,7 +47,15 @@ function RegisterPage() {
             setButtonLoading(true);
             userService.registerUser(emailRef.current.value, passwordRef.current.value).then((registered) => {
                 if(registered){
-                    console.log(registered);
+                    toast({
+                        title: 'Account created.',
+                        description: "You can login now.",
+                        status: 'success',
+                        duration: 9000,
+                        isClosable: true,
+                      });
+
+                    navigate("/login");
                 }
                 else{
                     setValid({
