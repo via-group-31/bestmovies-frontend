@@ -22,11 +22,11 @@ function App() {
     <Box h={defaultPadding} />
     
     <Routes>
-      <Route path='/' element={<MainPage />} />
-      <Route path='/login' element={<LoginPage />} />
-      <Route path='/register' element={<RegisterPage />} />
-      <Route path='/favorites' element={<FavoritePage />} />
-      <Route path='*' element={<FourOhFour />} />
+      <Route path='/' element={ <MainPage /> } />
+      <Route path='/login' element={ cookie.token === undefined ? <LoginPage /> : <FourOhFour /> } />
+      <Route path='/register' element={ cookie.token === undefined ? <RegisterPage /> : <FourOhFour /> } />
+      <Route path='/favorites' element={ cookie.token !== undefined ? <FavoritePage /> : <FourOhFour /> } />
+      <Route path='*' element={ <FourOhFour /> } />
     </Routes>
     </>
   );
