@@ -35,8 +35,8 @@ function MainPage() {
             {Array(5)
                     .fill('')
                     .map((_, i) => (
-                        <Link key={i} > 
-                        <Box position="relative">
+                        <Link key={i} style={{textDecoration: "none"}} className={'featured-link'} > 
+                        <Box position="relative" rounded="md" >
                               <Image src="http://placekitten.com/g/400/400" />
                               <Box className={'featured-box'} px="4">
                               <Text mt="8">
