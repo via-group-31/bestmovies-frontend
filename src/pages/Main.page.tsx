@@ -28,7 +28,7 @@ function MainPage() {
     return ( 
         <Container maxW='container.xl' >
             <Heading fontSize="6xl" fontWeight="black" mb="20" textAlign="center"> 
-                Featured movies - git actions WORK!
+                Featured movies
             </Heading>
 
             <Slider {...settings} >
