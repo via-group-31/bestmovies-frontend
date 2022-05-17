@@ -1,10 +1,14 @@
 import { Avatar, Box, GridItem,  Text,    Image, Grid, Container, Heading } from "@chakra-ui/react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import StarIcon from '../assets/StarIcon.component'
 import React, { useState } from 'react';
 import { useCookies } from "react-cookie";
 
 function Movie(){ 
+    const { movieId } = useParams();
+
+    console.log(`movie id = ${ movieId }`);
+
     const [isFavorite, setFavorite] = useState(false);
 
     const [cookie, setCookie, remvoeCookie] = useCookies(['token']);
@@ -14,7 +18,6 @@ function Movie(){
     ]
 
     return(
-        <>
         <Container  maxW='container.xl' >
             <Grid templateColumns='repeat(5, 1fr)' gap="8"> 
                 <GridItem colSpan={1} width="100%">
@@ -105,8 +108,6 @@ function Movie(){
                 </GridItem>
             </Grid>
         </Container>
-       
-        </>
     )
 }
 
