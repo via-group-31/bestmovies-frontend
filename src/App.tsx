@@ -5,6 +5,8 @@ import Navbar from './components/Navbar.component';
 import LoginPage from './pages/Login.page';
 import RegisterPage from './pages/Register.page';
 import FavoritePage from './pages/Favorite.page';
+import MoviePage from './pages/Movie.page';
+
 import { Box, Divider } from '@chakra-ui/react';
 import { blue, defaultPadding } from './constants';
 import FourOhFour from './pages/404.page';
@@ -26,6 +28,8 @@ function App() {
       <Route path='/login' element={ cookie.token === undefined ? <LoginPage /> : <FourOhFour /> } />
       <Route path='/register' element={ cookie.token === undefined ? <RegisterPage /> : <FourOhFour /> } />
       <Route path='/favorites' element={ cookie.token !== undefined ? <FavoritePage /> : <FourOhFour /> } />
+      <Route path='/movie' element={ cookie.token !== undefined ? <MoviePage /> : <FourOhFour /> } />
+
       <Route path='*' element={ <FourOhFour /> } />
     </Routes>
     </>

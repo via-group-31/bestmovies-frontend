@@ -6,6 +6,10 @@ export const blue: string = "#8AB8FE";
 export const darkBlue: string = "#000333";
 export const darkerBlue: string = "#000133";
 export const purple: string = "#4B006E";
+export const skyBlue: string = "#8AB8FE";
+export const lightGrey: string = "#CCCCCC";
+
+
 
 export const white: string = "#ffffff";
 export const black: string = "#000000";

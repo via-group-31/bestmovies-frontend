@@ -29,7 +29,7 @@ function Card(props: CardProps){
 
         
             <Box p='6' position="relative" bg="white">
-            <Box position="absolute" right="0" bg="darkBlue" py="2" px="4" style={{bottom: '9.55rem'}}>
+            <Box position="absolute" right="0" bg="darkBlue"  roundedLeft="md" fontWeight="bold" py="2" px="4" style={{bottom: '100%'}}>
                     <Text>
                        {props.type}
                     </Text>
@@ -41,7 +41,7 @@ function Card(props: CardProps){
                 </Box>
               
         
-                <Box color="black">
+                <Box color="black" mt="2">
                     {props.year} 
                 </Box>
         
