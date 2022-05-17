@@ -3,6 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import StarIcon from '../assets/StarIcon.component'
 import React, { useState } from 'react';
 import { useCookies } from "react-cookie";
+import StarRatings from 'react-star-ratings';
 
 function Movie(){ 
     const { movieId } = useParams();
@@ -10,12 +11,17 @@ function Movie(){
     console.log(`movie id = ${ movieId }`);
 
     const [isFavorite, setFavorite] = useState(false);
+    const [rating, setRating] = useState(5);
 
     const [cookie, setCookie, remvoeCookie] = useCookies(['token']);
 
     const toggleFavorite = () =>[
         setFavorite(!isFavorite)
     ]
+
+    const changeRating = (newRating: number) => {
+        setRating(newRating);
+    };
 
     return(
         <Container  maxW='container.xl' >
@@ -104,6 +110,13 @@ function Movie(){
                         <Text fontWeight="light" color="lightgrey">
                             (57 reviews)
                         </Text>
+                        <StarRatings
+          rating={rating}
+          starRatedColor="grey"
+          changeRating={changeRating}
+          numberOfStars={5}
+          name='rating'
+        />
                     </Box>
 
                 </GridItem>
