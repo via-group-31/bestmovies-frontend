@@ -11,6 +11,7 @@ import { Box, Divider } from '@chakra-ui/react';
 import { blue, defaultPadding } from './constants';
 import FourOhFour from './pages/404.page';
 import { useCookies } from 'react-cookie';
+import PersonPage from './pages/Person.page';
 
 function App() {
 
@@ -28,7 +29,8 @@ function App() {
       <Route path='/login' element={ cookie.token === undefined ? <LoginPage /> : <FourOhFour /> } />
       <Route path='/register' element={ cookie.token === undefined ? <RegisterPage /> : <FourOhFour /> } />
       <Route path='/favorites' element={ cookie.token !== undefined ? <FavoritePage /> : <FourOhFour /> } />
-      <Route path='/movie' element={ cookie.token !== undefined ? <MoviePage /> : <FourOhFour /> } />
+      <Route path='/movie' element={ <MoviePage /> } />
+      <Route path='/person' element={ <PersonPage /> } />
 
       <Route path='*' element={ <FourOhFour /> } />
     </Routes>
