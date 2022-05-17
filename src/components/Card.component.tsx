@@ -1,4 +1,4 @@
-import {Box, Badge, Image, Link, Text } from "@chakra-ui/react";
+import {Box,  Image, Link, Text } from "@chakra-ui/react";
 import StarIcon from '../assets/StarIcon.component'
 import { ArrowForwardIcon } from '@chakra-ui/icons'
 
@@ -9,6 +9,7 @@ type CardProps = {
     year:number,
     averageRating: number
 };
+
 
 function Card(props: CardProps){
     const property = {
@@ -46,14 +47,16 @@ function Card(props: CardProps){
                 </Box>
         
                 <Box display='flex' mt='2' alignItems='center'>
-                {Array(5)
+                {/* {Array(5)
                     .fill('')
                     .map((_, i) => (
                     <StarIcon
                         key={i}
 
                     />
-                    ))}
+                    ))} */}
+
+             
                 <Box as='span' ml='2' color='gray.600' fontSize='sm'>
                     {props.averageRating} 
                 </Box>
