@@ -2,12 +2,12 @@ import { Avatar, Box, GridItem,  Text,    Image, Grid, Container, Heading } from
 import { Link } from "react-router-dom";
 import StarIcon from '../assets/StarIcon.component'
 import React, { useState } from 'react';
-
-
-
+import { useCookies } from "react-cookie";
 
 function Movie(){ 
     const [isFavorite, setFavorite] = useState(false);
+
+    const [cookie, setCookie, remvoeCookie] = useCookies(['token']);
 
     const toggleFavorite = () =>[
         setFavorite(!isFavorite)
@@ -55,14 +55,14 @@ function Movie(){
                                 </Text>
                                
                             </Box>
-                        <Box color="skyBlue" fontWeight="semibold" onClick={toggleFavorite} className={isFavorite ? 'star-active' : ''}>
+                            { cookie.token !== undefined ? <Box color="skyBlue" fontWeight="semibold" onClick={toggleFavorite} className={isFavorite ? 'star-active' : ''}>
                             <Link to="#" style={{display:'flex', alignItems: 'center', gap:'0.5rem'}}  color="skyBlue" >
 
                                 Add to favorites
                                 <StarIcon />
                             </Link>  
                           
-                        </Box>
+                        </Box> : null }
                     </Box>
 
                     {/* Description */}
