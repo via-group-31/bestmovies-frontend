@@ -67,4 +67,13 @@
   font-size: 50px;
   font-weight: 900;
   padding-bottom: 1rem;
+  outline: 0;
+}
+
+.featured-link:focus {
+  box-shadow: none !important;
+}
+
+.featured-link {
+  border-radius: 10px;
 }

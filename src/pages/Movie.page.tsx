@@ -16,11 +16,11 @@ function Movie(){
     return(
         <>
         <Container  maxW='container.xl' >
-            <Grid templateColumns='repeat(5, 1fr)' gap="8"> 
-                <GridItem colSpan={1} width="100%">
+            <Grid templateColumns='300px 1fr' templateRows="auto" gap="8" alignItems="start" position="relative"> 
+                <GridItem  position="sticky" top="8">
                       <Image src='https://bit.ly/dan-abramov' alt='Dan Abramov' rounded="md" height="400px" width="100%" maxH="400px" objectFit="cover"/>
                 </GridItem>
-                <GridItem colStart={2} colEnd={6} h='10' >
+                <GridItem  >
                     {/* headline */}
 
                     <Heading fontWeight="black" fontSize="5xl"> 
@@ -69,6 +69,7 @@ function Movie(){
                     <Box mt="8" mb="10">
                         <Text fontWeight="medium" fontSize="xl" >
                         Prince Amleth is on the verge of becoming a man when his father is brutally murdered by his uncle, who kidnaps the boy’s mother. Two decades later, Amleth is now a Viking who’s on a mission to save his mother, kill his uncle and avenge his father.
+
                         </Text>
                     </Box>
 
