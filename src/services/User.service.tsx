@@ -5,8 +5,8 @@ export default class UserService{
     public async loginUser(username: string, password: string): Promise<string | null>{
         let token: string;
         try{
-            const response = await axios.post(`${apiURL}/user/login`, {
-                email: username,
+            const response = await axios.post(`${apiURL}/api/auth/login`, {
+                username: username,
                 password: password
             });
             if(response.status !== 200)
