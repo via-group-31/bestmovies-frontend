@@ -24,7 +24,7 @@ function Card(props: CardProps){
       }
     
       return (
-            <Box maxW='sm' borderRadius='lg' overflow='hidden' mb="8">
+            <Box maxW='sm' borderRadius='lg' overflow='hidden' >
             <Image src={property.imageUrl} alt={property.imageAlt} />
                
 
@@ -36,13 +36,13 @@ function Card(props: CardProps){
                     </Text>
                 </Box>
                 <Box>
-                    <Text fontSize="2xl" color="black" fontWeight="bold">
+                    <Text fontSize="2xl" color="black" fontWeight="bold" textTransform="capitalize">
                     {props.title}  
                     </Text>
                 </Box>
               
         
-                <Box color="black" mt="2">
+                <Box color="black"  fontWeight="medium">
                     {props.year} 
                 </Box>
         

@@ -4,14 +4,14 @@ import Card from '../components/Card.component'
 function FavoritePage() {
     return ( 
         <>
-           <Container maxW='container.xl'>
+           <Container maxW='container.lg'>
                <Heading fontSize='6xl' mb="2"> Favorite movies</Heading>
                <Flex fontSize="2xl" mb="4">
                    <Text flex="flex" mr="4"> x </Text>
                    <Text>tiles</Text>
                </Flex>
 
-               <Grid templateColumns='repeat(3, 1fr)' gap="2">
+               <Grid templateColumns='repeat(3, 1fr)' gap="8">
 
                {Array(5)
                 .fill("")

@@ -14,7 +14,7 @@
 }
 
 .star-active a svg path {
-  fill: #87ceeb;
+  fill: yellow;
   animation: scaling;
   transform-origin: center;
   animation-duration: 0.2s;
@@ -76,4 +76,12 @@
 
 .featured-link {
   border-radius: 10px;
+}
+
+.slick-prev {
+  left: -50px !important;
+}
+
+.slick-next {
+  right: -10px;
 }

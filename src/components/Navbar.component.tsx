@@ -33,7 +33,7 @@ function Navbar(props: NavbarProps) {
                         <Link to="/">{ props.title }</Link>
                     </Text>
                 </GridItem>
-                <GridItem>
+                <GridItem maxW="790px" margin="0 auto" w="100%">
                     <FormControl id="movie" w="100%" color={black}>
                         <AutoComplete>
                             <AutoCompleteInput placeholder="Search" bgColor={white} />
@@ -63,7 +63,8 @@ function Navbar(props: NavbarProps) {
                                                     {movie.year}
                                                 </GridItem>
                                                 <GridItem colSpan={2} mt="-10" fontSize="xl">
-                                                    {movie.actors.map(actor => actor.name +", ")}
+
+                                                    {movie.actors.map((actor, index) => (index? ', ' : '') + actor.name )}
                                                 </GridItem>
                                             </Grid>
                                         </AutoCompleteItem>

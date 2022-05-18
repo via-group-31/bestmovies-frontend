@@ -17,7 +17,7 @@ import ReactStars from 'react-stars'
 function Movie() {
   const { movieId } = useParams();
 
-  console.log(`movie id = ${movieId}`);
+  // console.log(`movie id = ${movieId}`);
 
   const [isFavorite, setFavorite] = useState(false);
   const [rating, setRating] = useState(5);
@@ -27,6 +27,7 @@ function Movie() {
   const toggleFavorite = () => [setFavorite(!isFavorite)];
 
   const changeRating = (newRating: number) => {
+    console.log(newRating)
     setRating(newRating);
   };
 
@@ -155,6 +156,14 @@ function Movie() {
             <Text fontWeight="light" color="lightgrey">
               (57 reviews)
             </Text>
+           
+          </Box>
+
+          <Box display="flex" alignItems="center" mt="10">
+            <Heading mr="4">
+              Your rating
+            </Heading>
+           
             <ReactStars
                 count={5}
                 onChange={changeRating}
