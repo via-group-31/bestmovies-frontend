@@ -2,6 +2,10 @@ import { Container, Heading, Text, Flex,  Grid, GridItem,} from "@chakra-ui/reac
 import Card from '../components/Card.component'
 
 function FavoritePage() {
+
+    const handleDelete = () => {
+        alert("Button Clicked!");
+      };
     return ( 
         <>
            <Container maxW='container.lg'>
@@ -16,12 +20,16 @@ function FavoritePage() {
                {Array(5)
                 .fill("")
                 .map((n, i) => {
-                return <GridItem key={i}>
+                return <GridItem key={i} >
                         <Card title='title'
-                            image='image'
-                            year={2000}
-                            type='Tv show'
-                            averageRating={2}/>
+                                image='image'
+                                year={2000}
+                                type='Tv show'
+                                averageRating={2}
+                                id={i}
+                                onDelete={handleDelete} 
+
+                            />
                     </GridItem>;
                 })}
 
