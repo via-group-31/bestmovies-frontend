@@ -27,7 +27,7 @@ function Navbar(props: NavbarProps) {
 
     return ( 
         <Box bg={darkBlue} w='100%' p={4} color='white'>
-            <SimpleGrid templateColumns="300px 1fr 300px"  alignItems="center">
+            <SimpleGrid columns={3}  alignItems="center">
                 <GridItem pl={defaultPadding/3} pt={2}>
                     <Text color={blue} fontWeight="bold">
                         <Link to="/">{ props.title }</Link>
@@ -54,15 +54,15 @@ function Navbar(props: NavbarProps) {
                                         >
                                             <Grid h='200px' gap={4} templateRows='repeat(4, 1fr)' templateColumns='repeat(4, 1fr)'>
                                                 <GridItem rowSpan={4} colSpan={1}>
-                                                    <Image src={movie.image} h="200px"  maxW="130px" objectFit="cover" />
+                                                    <Image src={movie.image} h="200px"  objectFit="cover" />
                                                 </GridItem>
                                                 <GridItem colSpan={2}>
-                                                    <Text fontSize="2xl" fontWeight="semibold">{movie.title}</Text>
+                                                    <Text fontSize="xl" fontWeight="semibold">{movie.title}</Text>
                                                 </GridItem>
-                                                <GridItem colSpan={2} fontSize="xl" mt="-4">
+                                                <GridItem colSpan={2} fontSize="md" mt="-4">
                                                     {movie.year}
                                                 </GridItem>
-                                                <GridItem colSpan={2} mt="-10" fontSize="xl">
+                                                <GridItem colSpan={2} mt="-10" fontSize="md">
                                                     {movie.actors.map(actor => actor.name +", ")}
                                                 </GridItem>
                                             </Grid>
