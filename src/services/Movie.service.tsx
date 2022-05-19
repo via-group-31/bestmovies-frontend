@@ -6,7 +6,7 @@ export default class MovieService{
     public async getMovies(): Promise<Movie[]>{
         let movieList: Movie[];
         try{
-            const response = await axios.get(`${apiURL}/movie/myMovieList`);
+            const response = await axios.get(`${apiURL}/api/movies`);
             if(response.status !== 200)
                 return [];
             

@@ -8,15 +8,15 @@ import "slick-carousel/slick/slick-theme.css";
 function MainPage() {
     const movieService: MovieService = new MovieService();
 
-    // const [movieList, setMovieList] = useState<Movie[]>([]);
-    // const [moviesLoading, setMoviesLoading] = useState(true);
+    const [movieList, setMovieList] = useState<Movie[]>([]);
+    const [moviesLoading, setMoviesLoading] = useState(true);
 
-    // useEffect(() => {
-    //     movieService.getMovies().then(movies => {
-    //         setMovieList(movies);
-    //         setMoviesLoading(false);
-    //     });
-    // }, [])
+    useEffect(() => {
+        movieService.getMovies().then(movies => {
+            setMovieList(movies);
+            setMoviesLoading(false);
+        });
+    }, [])
     
     var settings = {
         dots: false,
