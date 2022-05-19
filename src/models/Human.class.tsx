@@ -1,35 +1,35 @@
 export default class Human{
-    private _id: number;
-    private _name: string;
-    private _birth: number;
+    private _personId: number;
+    private _personName: string;
+    private _personBirth?: number;
 
-    constructor(id: number, name: string, birth: number){
-        this._id = id;
-        this._name = name;
-        this._birth = birth;
+    constructor(personId: number, personName: string, personBirth?: number){
+        this._personId = personId;
+        this._personName = personName;
+        this._personBirth = personBirth;
     }
 
-    public get id(): number{
-        return this._id;
+    public get personId(): number{
+        return this._personId;
     }
 
-    public get name(): string{
-        return this._name;
+    public get personName(): string{
+        return this._personName;
     }
 
-    public get birth(): number{
-        return this._birth;
+    public get personBirth(): number | undefined{
+        return this._personBirth;
     }
     
-    public set id(id: number){
-        this._id = id
+    public set personId(personId: number){
+        this._personId = personId
     }
 
-    public set name(name: string){
-        this._name = name;
+    public set name(personName: string){
+        this._personName = personName;
     }
 
-    public set birth(birth: number){
-        this._birth = birth;
+    public set personBirth(personBirth: number | undefined){
+        this._personBirth = personBirth;
     }
 }

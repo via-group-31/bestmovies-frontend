@@ -1,61 +1,57 @@
 import Human from "./Human.class";
 
 export default class Movie{
-    private _movieID: number;
-    private _title: string;
+    private _movieId: number;
+    private _movieName: string;
     private _year: number;
-    private _image: string;
-    private _actors: Human[];
+    private _directors: Human[];
+    private _stars: Human[];
 
-    constructor(movieID: number, title: string, year: number, image: string, actors: Human[]){
-        this._movieID = movieID;
-        this._title = title;
+    constructor(movieId: number, movieName: string, year: number, directors: Human[], stars: Human[]){
+        this._movieId = movieId;
+        this._movieName = movieName;
         this._year = year;
-        this._image = image;
-        this._actors = actors;
+        this._directors = directors;
+        this._stars = stars;
     }
 
-    public get movieID(): number{
-        return this._movieID;
+    public get movieId(): number{
+        return this._movieId;
     }
 
-    public get title(): string{
-        return this._title;
+    public get movieName(): string{
+        return this._movieName;
     }
 
     public get year(): number{
         return this._year;
     }
 
-    public get image(): string{
-        return this._image;
+    public get stars(): Human[]{
+        return this._stars;
     }
 
-    public get actors(): Human[]{
-        return this._actors;
+    public get directors(): Human[]{
+        return this.directors;
     }
 
-    public set movieID(movieID: number){
-        this._movieID = movieID;
+    public set movieId(movieId: number){
+        this.movieId = movieId;
     }
 
-    public set title(title: string){
-        this._title = title;
+    public set movieName(movieName: string){
+        this.movieName = movieName;
     }
 
     public set year(year: number){
         this._year = year;
     }
 
-    public set image(image: string){
-        this._image = image;
+    public set stars(stars: Human[]){
+        this._stars = stars;
     }
 
-    public set actors(actors: Human[]){
-        this._actors = actors;
-    }
-
-    public addActor(actor: Human): void{
-        this.actors.push(actor);
+    public set directors(directors: Human[]){
+        this._directors = directors;
     }
 }

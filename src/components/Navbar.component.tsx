@@ -21,9 +21,9 @@ function Navbar(props: NavbarProps) {
     actors.push(new Human(3, "Bob Bobber", 22));
 
     const movies: Movie[] = [];
-    movies.push(new Movie(1, "Pulp fiction", 1994, "https://i-viaplay-com.akamaized.net/viaplay-prod/771/672/1473257890-66ec43721fe0fd0073af100473a09da74924816c.jpg?width=400&height=600", actors));
-    movies.push(new Movie(2, "Avatar 2", 2023, "https://www.kino.dk/sites/default/files/styles/k_poster_big/public/movie-posters/avatar2plakat.jpg?itok=A_IsQnnZ", actors));
-    movies.push(new Movie(3, "Doctor Strange 2", 2022, "https://preview.redd.it/idmatrlv8af81.jpg?auto=webp&s=ce52969c3a401eb4b8806b1b8cefb8f67b3b9080", actors));
+    movies.push(new Movie(1, "Pulp fiction", 1994, actors, actors));
+    movies.push(new Movie(2, "Avatar 2", 2023, actors, actors));
+    movies.push(new Movie(3, "Doctor Strange 2", 2022, actors, actors));
 
     return ( 
         <Box bg={darkBlue} w='100%' p={4} color='white'>
@@ -40,31 +40,31 @@ function Navbar(props: NavbarProps) {
                             <AutoCompleteList>
                                  {movies.map((movie, mid) => {
                                      const routeChange = () =>{ 
-                                       let path = `/movie/${movie.movieID}`; 
+                                       let path = `/movie/${movie.movieId}`; 
                                        navigate(path);
                                      }
 
                                      return (
                                         <AutoCompleteItem
                                             key={`option-${mid}`}
-                                            value={movie.title}
+                                            value={movie.movieName}
                                             textTransform="capitalize"
                                             align="center"
                                             onClick={routeChange}
                                         >
                                             <Grid h='200px' gap={4} templateRows='repeat(4, 1fr)' templateColumns='repeat(4, 1fr)'>
-                                                <GridItem rowSpan={4} colSpan={1}>
+                                                {/* <GridItem rowSpan={4} colSpan={1}>
                                                     <Image src={movie.image} h="200px"  objectFit="cover" />
-                                                </GridItem>
+                                                </GridItem> */}
                                                 <GridItem colSpan={2}>
-                                                    <Text fontSize="xl" fontWeight="semibold">{movie.title}</Text>
+                                                    <Text fontSize="xl" fontWeight="semibold">{movie.movieName}</Text>
                                                 </GridItem>
                                                 <GridItem colSpan={2} fontSize="md" mt="-4">
                                                     {movie.year}
                                                 </GridItem>
                                                 <GridItem colSpan={2} mt="-10" fontSize="xl">
 
-                                                    {movie.actors.map((actor, index) => (index? ', ' : '') + actor.name )}
+                                                    {movie.stars.map((star, index) => (index? ', ' : '') + star.name )}
                                                 </GridItem>
                                             </Grid>
                                         </AutoCompleteItem>

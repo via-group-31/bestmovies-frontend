@@ -15,6 +15,8 @@ function MainPage() {
         movieService.getMovies().then(movies => {
             setMovieList(movies);
             setMoviesLoading(false);
+            console.log(movies);
+            
         });
     }, [])
     
