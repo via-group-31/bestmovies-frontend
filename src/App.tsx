@@ -29,7 +29,7 @@ function App() {
       <Route path='/login' element={ cookie.token === undefined ? <LoginPage /> : <FourOhFour /> } />
       <Route path='/register' element={ cookie.token === undefined ? <RegisterPage /> : <FourOhFour /> } />
       <Route path='/favorites' element={ cookie.token !== undefined ? <FavoritePage /> : <FourOhFour /> } />
-      <Route path='/movie/:movieId' element={ <MoviePage /> } />
+      <Route path='/movie/:movieId' element={ <MoviePage loggedIn={cookie.token !== undefined} /> } />
       <Route path='/person/:personId' element={ <PersonPage /> } />
 
       <Route path='*' element={ <FourOhFour /> } />

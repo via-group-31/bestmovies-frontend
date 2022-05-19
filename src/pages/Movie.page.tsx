@@ -14,7 +14,11 @@ import React, { useState } from "react";
 import { useCookies } from "react-cookie";
 import ReactStars from 'react-stars'
 
-function Movie() {
+type MovieProps = {
+  loggedIn: boolean
+};
+
+function Movie(props: MovieProps) {
   const { movieId } = useParams();
 
   // console.log(`movie id = ${movieId}`);
@@ -23,6 +27,8 @@ function Movie() {
   const [rating, setRating] = useState(5);
 
   const [cookie, setCookie, remvoeCookie] = useCookies(["token"]);
+
+  console.log(cookie)
 
   const toggleFavorite = () => [setFavorite(!isFavorite)];
 
@@ -163,14 +169,17 @@ function Movie() {
             <Heading mr="4">
               Your rating
             </Heading>
-           
-            <ReactStars
+
+            { props.loggedIn ? <ReactStars
                 count={5}
                 onChange={changeRating}
                 size={24}
                 color2={'#ffd700'} 
                 value={rating}
-            />
+            /> : '' }
+
+           
+            
           </Box>
         </GridItem>
       </Grid>
