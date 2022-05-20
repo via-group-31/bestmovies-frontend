@@ -58,7 +58,7 @@ function MainPage() {
                         </Skeleton>))
                     :
                     movieList.map(movie => (
-                        <Link to={`/movie/${movie.movieId}`} style={{ textDecoration: "none" }} className={'featured-link'} >
+                        <Link key={movie.movieId} to={`/movie/${movie.movieId}`} style={{ textDecoration: "none" }} className={'featured-link'} >
                             <Box position="relative" rounded="md" >
                                 <Image src={movie.moviePoster} height={600} />
                                 <Box className={'featured-box'} px="4">

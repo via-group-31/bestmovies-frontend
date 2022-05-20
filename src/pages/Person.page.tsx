@@ -77,7 +77,7 @@ function PersonPage() {
                             <Box display="flex" gap="4">
                                 <SimpleGrid columns={3} spacing={4}>
                                     {person?.actorOf.map(movie => (
-                                        <Box><Link to={`/movie/${movie.movieId}`} style={{ textDecoration: 'underline', color: "lightgrey" }}>
+                                        <Box><Link key={movie.movieId} to={`/movie/${movie.movieId}`} style={{ textDecoration: 'underline', color: "lightgrey" }}>
                                             <Text fontSize="xl">
                                                 {movie.movieName}
                                             </Text>

@@ -1,8 +1,8 @@
 export default class UserModel{
-    private userID: number;
-    private username: string;
-    private email: string;
-    private accessToken: string;
+    public userID: number;
+    public username: string;
+    public email: string;
+    public accessToken: string;
 
     constructor(userID: number, username: string, email: string, accessToken: string){
         this.userID = userID;
