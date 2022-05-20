@@ -1,22 +1,26 @@
 import { Container, Text, Heading, Box, Image, Link } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import Movie from "../models/Movie.class";
+import Movie from "../models/Movie.model";
 import MovieService from "../services/Movie.service";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { useCookies } from "react-cookie";
 function MainPage() {
     const movieService: MovieService = new MovieService();
 
     const [movieList, setMovieList] = useState<Movie[]>([]);
     const [moviesLoading, setMoviesLoading] = useState(true);
 
+    const [cookie, setCookie, remvoeCookie] = useCookies(['token']);
+
+    movieService.getMoviesByMovieName("Avatar").then(result => console.log(result))
+
     useEffect(() => {
         movieService.getMovies().then(movies => {
             setMovieList(movies);
             setMoviesLoading(false);
             console.log(movies);
-            
         });
     }, [])
     

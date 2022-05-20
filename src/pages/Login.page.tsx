@@ -46,10 +46,6 @@ function LoginPage() {
         if (handleValidation() && emailRef.current?.value && passwordRef.current?.value) {
             setButtonLoading(true);
             userService.loginUser(emailRef.current.value, passwordRef.current.value).then((token) => {
-                //TESTING
-                setCookie("token", "token-test");
-                navigate("/");
-                //TESTING
                 if(token == null){
                     setValid({
                         emailErr: 'Wrong username or password',

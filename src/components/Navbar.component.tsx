@@ -3,8 +3,8 @@ import { AutoComplete, AutoCompleteInput, AutoCompleteItem, AutoCompleteList } f
 import { useCookies } from "react-cookie";
 import { Link, useNavigate } from "react-router-dom";
 import { black, blue, darkBlue, defaultPadding, white } from "../constants";
-import Human from "../models/Human.class";
-import Movie from "../models/Movie.class";
+import Human from "../models/Person.model";
+import Movie from "../models/Movie.model";
 import UserService from "../services/User.service";
 type NavbarProps = {
     title: string,
@@ -64,7 +64,7 @@ function Navbar(props: NavbarProps) {
                                                 </GridItem>
                                                 <GridItem colSpan={2} mt="-10" fontSize="xl">
 
-                                                    {movie.stars.map((star, index) => (index? ', ' : '') + star.name )}
+                                                    {movie.stars.map((star, index) => (index? ', ' : '') + star.personName )}
                                                 </GridItem>
                                             </Grid>
                                         </AutoCompleteItem>
