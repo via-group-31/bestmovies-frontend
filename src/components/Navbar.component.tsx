@@ -16,9 +16,9 @@ function Navbar(props: NavbarProps) {
     let navigate = useNavigate(); 
 
     const actors: Human[] = [];
-    actors.push(new Human(1, "John Doe", 20));
-    actors.push(new Human(2, "Jane Doe", 21));
-    actors.push(new Human(3, "Bob Bobber", 22));
+    actors.push(new Human(1, "John Doe", 20, [], []));
+    actors.push(new Human(2, "Jane Doe", 21, [], []));
+    actors.push(new Human(3, "Bob Bobber", 22, [], []));
 
     const movies: Movie[] = [];
     movies.push(new Movie(1, "Pulp fiction", 1994, actors, actors));

@@ -1,4 +1,4 @@
-export default class Users{
+export default class UserModel{
     private _userID: number;
     private _username: string;
     private _email: string;
