@@ -1,5 +1,4 @@
 import {
-  Avatar,
   Box,
   GridItem,
   Text,
@@ -10,18 +9,32 @@ import {
 } from "@chakra-ui/react";
 import { Link, useParams } from "react-router-dom";
 import StarIcon from "../assets/StarIcon.component";
-import React, { useState } from "react";
+import { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
-import ReactStars from 'react-stars'
+import MovieDetailSkeleton from "../components/MovieDetail";
+import MovieService from "../services/Movie.service";
+import Movie from "../models/Movie.model";
 
 type MovieProps = {
   loggedIn: boolean
 };
 
-function Movie(props: MovieProps) {
+function MoviePage(props: MovieProps) {
   const { movieId } = useParams();
 
-  // console.log(`movie id = ${movieId}`);
+  const [movie, setMovie] = useState<Movie | null>(null);
+  const [movieLoading, setMovieLoading] = useState(true);
+
+  const movieService: MovieService = new MovieService();
+
+  useEffect(() => {
+    movieService.getMoviesByMovieId(Number(movieId)).then(movie => {
+      if(movie !== null){
+        setMovie(movie);
+        setMovieLoading(false);
+      }
+    });
+  }, []);
 
   const [isFavorite, setFavorite] = useState(false);
   const [rating, setRating] = useState(5);
@@ -32,12 +45,7 @@ function Movie(props: MovieProps) {
 
   const toggleFavorite = () => [setFavorite(!isFavorite)];
 
-  const changeRating = (newRating: number) => {
-    console.log(newRating)
-    setRating(newRating);
-  };
-
-  return (
+  return  (movieLoading ? <MovieDetailSkeleton /> :
     <Container maxW="container.xl">
       <Grid
         templateColumns="300px 1fr"
@@ -61,7 +69,7 @@ function Movie(props: MovieProps) {
           {/* headline */}
 
           <Heading fontWeight="black" fontSize="5xl">
-            The Northman
+            { movie?.movieName }
           </Heading>
 
           {/* year, directors */}
@@ -75,17 +83,14 @@ function Movie(props: MovieProps) {
           >
             <Box display="flex">
               <Text textDecoration="underline" mr="4" fontWeight="medium">
-                2022
+                { movie?.year }
               </Text>
               <Text mr="2" color="lightgrey" fontWeight="medium">
                 Directed by
               </Text>
-              <Link
-                to="#"
-                style={{ textDecoration: "underline", fontWeight: "bold" }}
-              >
-                Tvoja mac
-              </Link>
+                { movie?.directors.map(director => 
+                  <Link style={{ textDecoration: "underline", fontWeight: "bold" }} to={`/person/${director.personId}`}> {director.personName + " "} </Link>) 
+                }
             </Box>
           </Box>
 
@@ -98,10 +103,6 @@ function Movie(props: MovieProps) {
             fontSize="xl"
             alignItems="center"
           >
-            <Box display="flex" color="lightgrey">
-              <Text mr="1">Horror/Drama</Text>
-              <Text mr="2">&#8226; 1h 40m</Text>
-            </Box>
             {cookie.token !== undefined ? (
               <Box
                 color="skyBlue"
@@ -124,33 +125,12 @@ function Movie(props: MovieProps) {
               </Box>
             ) : null}
           </Box>
-
-          {/* Description */}
-          <Box mt="8" mb="10">
-            <Text fontWeight="medium" fontSize="xl">
-              Prince Amleth is on the verge of becoming a man when his father is
-              brutally murdered by his uncle, who kidnaps the boy’s mother. Two
-              decades later, Amleth is now a Viking who’s on a mission to save
-              his mother, kill his uncle and avenge his father.
-            </Text>
-          </Box>
-
           {/* actors  */}
 
           <Box>
             <Heading mb="6">Actors</Heading>
             <Box display="flex" gap="4">
-              {Array(5)
-                .fill("")
-                .map((_, i) => (
-                  <Link
-                    to="#"
-                    key={i}
-                    style={{ textDecoration: "underline", color: "lightgrey" }}
-                  >
-                    <Text fontSize="xl">Actors</Text>
-                  </Link>
-                ))}
+              { movie?.stars.map(star => <Link to={ "/person/" + star.personId }>{ star.personName + " " }</Link> )}
             </Box>
           </Box>
 
@@ -162,24 +142,11 @@ function Movie(props: MovieProps) {
             <Text fontWeight="light" color="lightgrey">
               (57 reviews)
             </Text>
-           
+
           </Box>
 
           <Box display="flex" alignItems="center" mt="10">
-            <Heading mr="4">
-              Your rating
-            </Heading>
 
-            { props.loggedIn ? <ReactStars
-                count={5}
-                onChange={changeRating}
-                size={24}
-                color2={'#ffd700'} 
-                value={rating}
-            /> : '' }
-
-           
-            
           </Box>
         </GridItem>
       </Grid>
@@ -187,4 +154,4 @@ function Movie(props: MovieProps) {
   );
 }
 
-export default Movie;
+export default MoviePage;

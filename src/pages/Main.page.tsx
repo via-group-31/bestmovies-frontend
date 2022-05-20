@@ -22,7 +22,7 @@ function MainPage() {
             setMoviesLoading(false);
             console.log(movies);
         });
-    }, [])
+    }, []);
     
     var settings = {
         dots: false,
