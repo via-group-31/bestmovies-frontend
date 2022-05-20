@@ -1,6 +1,6 @@
 import { Box, Container, Grid, GridItem, Heading, Skeleton, Text } from "@chakra-ui/react";
 
-function MovieDetailSkeleton() {
+function LoadingDetail() {
     return (
         <Container maxW="container.xl">
           <Grid
@@ -69,4 +69,4 @@ function MovieDetailSkeleton() {
       )
 }
 
-export default MovieDetailSkeleton;
+export default LoadingDetail;

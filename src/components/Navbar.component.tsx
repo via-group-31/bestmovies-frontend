@@ -21,9 +21,9 @@ function Navbar(props: NavbarProps) {
     actors.push(new Human(3, "Bob Bobber", 22, [], []));
 
     const movies: Movie[] = [];
-    movies.push(new Movie(1, "Pulp fiction", 1994, actors, actors));
-    movies.push(new Movie(2, "Avatar 2", 2023, actors, actors));
-    movies.push(new Movie(3, "Doctor Strange 2", 2022, actors, actors));
+    movies.push(new Movie(1, "Pulp fiction", 1994, actors, actors, ""));
+    movies.push(new Movie(2, "Avatar 2", 2023, actors, actors, ""));
+    movies.push(new Movie(3, "Doctor Strange 2", 2022, actors, actors, ""));
 
     return ( 
         <Box bg={darkBlue} w='100%' p={4} color='white'>

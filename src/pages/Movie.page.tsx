@@ -6,20 +6,18 @@ import {
   Grid,
   Container,
   Heading,
+  SimpleGrid,
 } from "@chakra-ui/react";
 import { Link, useParams } from "react-router-dom";
 import StarIcon from "../assets/StarIcon.component";
 import { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
-import MovieDetailSkeleton from "../components/MovieDetail";
 import MovieService from "../services/Movie.service";
 import Movie from "../models/Movie.model";
+import LoadingDetail from "../components/LoadingDetail.component";
 
-type MovieProps = {
-  loggedIn: boolean
-};
 
-function MoviePage(props: MovieProps) {
+function MoviePage() {
   const { movieId } = useParams();
 
   const [movie, setMovie] = useState<Movie | null>(null);
@@ -37,15 +35,12 @@ function MoviePage(props: MovieProps) {
   }, []);
 
   const [isFavorite, setFavorite] = useState(false);
-  const [rating, setRating] = useState(5);
 
   const [cookie, setCookie, remvoeCookie] = useCookies(["token"]);
 
-  console.log(cookie)
-
   const toggleFavorite = () => [setFavorite(!isFavorite)];
 
-  return  (movieLoading ? <MovieDetailSkeleton /> :
+  return  (movieLoading ? <LoadingDetail /> :
     <Container maxW="container.xl">
       <Grid
         templateColumns="300px 1fr"
@@ -56,7 +51,7 @@ function MoviePage(props: MovieProps) {
       >
         <GridItem position="sticky" top="8">
           <Image
-            src="https://bit.ly/dan-abramov"
+            src={movie?.moviePoster}
             alt="Dan Abramov"
             rounded="md"
             height="400px"
@@ -130,7 +125,9 @@ function MoviePage(props: MovieProps) {
           <Box>
             <Heading mb="6">Actors</Heading>
             <Box display="flex" gap="4">
-              { movie?.stars.map(star => <Link to={ "/person/" + star.personId }>{ star.personName + " " }</Link> )}
+              <SimpleGrid columns={4} spacing={5}>
+                { movie?.stars.map(star => <Box><Link to={ "/person/" + star.personId }>{ star.personName }</Link></Box> )}
+              </SimpleGrid>
             </Box>
           </Box>
 

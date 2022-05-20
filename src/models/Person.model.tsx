@@ -1,6 +1,6 @@
 import Movie from "./Movie.model";
 
-export default class Human{
+export default class Person{
     public personId: number;
     public personName: string;
     public personBirth: number | null;
