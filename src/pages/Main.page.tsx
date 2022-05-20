@@ -5,7 +5,6 @@ import MovieService from "../services/Movie.service";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { useCookies } from "react-cookie";
 import { Link } from "react-router-dom";
 function MainPage() {
     const movieService: MovieService = new MovieService();
@@ -13,13 +12,15 @@ function MainPage() {
     const [movieList, setMovieList] = useState<Movie[]>([]);
     const [moviesLoading, setMoviesLoading] = useState(true);
 
-    const [cookie, setCookie, removeCookie] = useCookies(['token']);
-
     useEffect(() => {
+        const abortion = new AbortController();
+        
         movieService.getMovies().then(movies => {
             setMovieList(movies);
             setMoviesLoading(false);
         });
+
+        return () => abortion.abort();
     }, []);
 
     var settings = {
@@ -37,8 +38,8 @@ function MainPage() {
 
             <Slider {...settings} >
                 {moviesLoading ?
-                    Array(2).fill('').map(array => (
-                        <Skeleton>
+                    Array(2).fill('').map((array, i) => (
+                        <Skeleton key={i}>
                             <Box position="relative" rounded="md" >
                                 <Image height={600} />
                                 <Box className={'featured-box'} px="4">
@@ -64,7 +65,7 @@ function MainPage() {
                                 <Box className={'featured-box'} px="4">
 
                                     <Text mt="8">
-                                        Movie name
+                                        {movie.movieName}
                                     </Text>
 
                                     <Box display="flex" justifyContent="space-between" alignItems="center">
@@ -82,7 +83,6 @@ function MainPage() {
 
 
             </Slider>
-            {/* {moviesLoading ? null : <Text>{movieList[0].title}</Text>} */}
         </Container>
     );
 }

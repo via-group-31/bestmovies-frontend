@@ -1,13 +1,13 @@
 export default class UserModel{
-    public userID: number;
-    public username: string;
-    public email: string;
+    public userId: number;
+    public userEmail: string;
+    public userPassword: string;
     public accessToken: string;
 
-    constructor(userID: number, username: string, email: string, accessToken: string){
-        this.userID = userID;
-        this.username = username;
-        this.email = email;
+    constructor(userId: number, userEmail: string, userPassword: string, accessToken: string){
+        this.userId = userId;
+        this.userEmail = userEmail;
+        this.userPassword = userPassword;
         this.accessToken = accessToken;
     }
 }

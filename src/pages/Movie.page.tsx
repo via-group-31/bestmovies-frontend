@@ -8,6 +8,8 @@ import {
   Heading,
   SimpleGrid,
   Center,
+  Divider,
+  CircularProgress,
 } from "@chakra-ui/react";
 import { Link, useParams } from "react-router-dom";
 import StarIcon from "../assets/StarIcon.component";
@@ -18,6 +20,8 @@ import Movie from "../models/Movie.model";
 import LoadingDetail from "../components/LoadingDetail.component";
 import Rating from "../models/Rating.model";
 import RatingService from "../services/Rating.service";
+import Review from "../models/Review.model";
+import ReviewService from "../services/Review.service";
 
 
 function MoviePage() {
@@ -29,10 +33,16 @@ function MoviePage() {
   const [movieRating, setMovieRating] = useState<Rating | null>(null);
   const [movieRatingLoading, setMovieRatingLoadng] = useState(true);
 
+  const [reviews, setReviews] = useState<Review[]>([]);
+  const [reviewsLoading, setReviewsLoading] = useState(true);
+
   const movieService: MovieService = new MovieService();
   const ratingService: RatingService = new RatingService();
+  const reviewService: ReviewService = new ReviewService();
 
   useEffect(() => {
+    const abortion = new AbortController();
+
     movieService.getMoviesByMovieId(Number(movieId)).then(movie => {
       if (movie !== null) {
         setMovie(movie);
@@ -44,8 +54,17 @@ function MoviePage() {
             setMovieRatingLoadng(false);
           }
         });
+
+        reviewService.getReviewsByMovieId(movie.movieId).then(reviews => {
+          setReviews(reviews)
+          setReviewsLoading(false);
+        });
+
+        return () => abortion.abort();
       }
     });
+
+    return () => abortion.abort();
   }, []);
 
   const [isFavorite, setFavorite] = useState(false);
@@ -151,7 +170,7 @@ function MoviePage() {
             <Heading mb="6">Actors</Heading>
             <Box display="flex" gap="4">
               <SimpleGrid columns={4} spacing={5}>
-                {movie?.stars.map(star => <Box><Link to={"/person/" + star.personId}>{star.personName}</Link></Box>)}
+                {movie?.stars.map(star => <Box><Link key={star.personId} to={"/person/" + star.personId}>{star.personName}</Link></Box>)}
               </SimpleGrid>
             </Box>
           </Box>
@@ -162,14 +181,21 @@ function MoviePage() {
               Reviews
             </Heading>
             <Text fontWeight="light" color="lightgrey">
-              (57 reviews)
+              {reviewsLoading ? <CircularProgress size={5} isIndeterminate color="green.300"/> : `(${reviews.length} reviews)` }
             </Text>
-
           </Box>
 
-          <Box display="flex" alignItems="center" mt="10">
-
+          <Box>
+          { reviews.map(review => 
+              <Box key={review.reviewId} p={3} mt="3" borderWidth="1px" borderRadius='lg' overflow='hidden' borderColor="grey">
+                <Text mb={2}>{review.userModel?.userEmail}</Text>
+                <Divider mb={5} />
+                <Text>{review.reviewContent}</Text>
+              </Box>
+            ) 
+          }
           </Box>
+          
         </GridItem>
       </Grid>
     </Container>
