@@ -36,7 +36,7 @@ function MoviePage() {
 
   const [isFavorite, setFavorite] = useState(false);
 
-  const [cookie, setCookie, remvoeCookie] = useCookies(["token"]);
+  const [cookie, setCookie, removeCookie] = useCookies(["token"]);
 
   const toggleFavorite = () => [setFavorite(!isFavorite)];
 
@@ -126,7 +126,7 @@ function MoviePage() {
             <Heading mb="6">Actors</Heading>
             <Box display="flex" gap="4">
               <SimpleGrid columns={4} spacing={5}>
-                { movie?.stars.map(star => <Box><Link to={ "/person/" + star.personId }>{ star.personName }</Link></Box> )}
+                { movie?.stars.map(star => <Box><Link to={ "/person/" + star.personId }>{ star.personName }</Link></Box> ) }
               </SimpleGrid>
             </Box>
           </Box>

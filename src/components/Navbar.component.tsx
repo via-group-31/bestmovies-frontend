@@ -85,11 +85,11 @@ function Navbar(props: NavbarProps) {
 
 function NavbarAvatar () {
 
-    const [cookie, setCookie, remvoeCookie] = useCookies(['token']);
+    const [cookie, setCookie, removeCookie] = useCookies(['token']);
     let navigate = useNavigate(); 
 
     const logout = () => {
-        remvoeCookie("token");
+        removeCookie("token");
         navigate("/");
     };
 
