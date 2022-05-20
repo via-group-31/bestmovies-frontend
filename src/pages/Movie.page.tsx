@@ -96,9 +96,9 @@ function MoviePage() {
             {movieRatingLoading ?
               null
               :
-              <Center bg={movieRating!.rating <= 3 ? "#535353" : movieRating!.rating <= 7 ? "#658db4" : "#ba0305"}
+              <Center bg={movieRating!.rating >= 7 ? "#ba0305" : movieRating!.rating >= 3 ? "#658db4" : "#535353"}
                 h={20} borderRadius={5}>
-                <Text fontSize="3xl" fontWeight="bold">{Math.floor(movieRating!.rating * 10)}%</Text>
+                <Text fontSize="3xl" fontWeight="bold">{isNaN(Number(Math.floor(movieRating!.rating * 10))) ? 0 : (Math.floor(movieRating!.rating * 10))}%</Text>
               </Center>
             }
 
