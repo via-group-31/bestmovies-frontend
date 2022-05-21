@@ -69,7 +69,8 @@ function MoviePage() {
     });
 
     userService.getFavoriteMovie(cookie.token, Number(movieId)).then((res) => {
-      // TODO: test
+      console.log(res);
+      
       if (mounted) {
         setFavoriteMovie(res);
         setFavoriteMovieLoading(false);
@@ -84,15 +85,18 @@ function MoviePage() {
   const [cookie, setCookie, removeCookie] = useCookies(["token"]);
 
   const toggleFavorite = () => {
-    // TODO: test
     setFavoriteMovieLoading(true);
     if (favoriteMovie) {
+      console.log("Here I sit");
+
       userService.deleteFromFavorites(cookie.token, Number(movieId)).then(() => {
         setFavoriteMovieLoading(false);
         setFavoriteMovie(false);
       });
     } 
     else {
+      console.log("Here I stand");
+      
       userService.addToFavorites(cookie.token, Number(movieId)).then(() => {
         setFavoriteMovieLoading(false);
         setFavoriteMovie(true);
@@ -194,7 +198,7 @@ function MoviePage() {
             alignItems="center"
           >
             {cookie.token !== undefined ? (
-              { favoriteMovieLoading } ? (
+               favoriteMovieLoading ? (
                 <CircularProgress size={5} isIndeterminate color="green.300" />
               ) : (
                 <Box

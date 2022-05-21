@@ -16,14 +16,15 @@ function PersonPage() {
     const personService: PersonService = new PersonService();
 
     useEffect(() => {
+        let mounted: boolean = true;
         personService.getPersonByPersonId(Number(personId)).then(person => {
-            if (person !== null) {
+            if (mounted && person !== null) {
                 setPerson(person);
                 setPersonLoading(false);
-                console.log(person);
-
             }
         });
+
+        return () => {mounted = false;}
     }, []);
 
     return (personLoading ? <LoadingDetail /> :
@@ -59,7 +60,7 @@ function PersonPage() {
                             <Box display="flex" gap="4">
                                 <SimpleGrid columns={3} spacing={4}>
                                     {person?.directorOf.map(movie => (
-                                        <Box><Link to={`/movie/${movie.movieId}`} style={{ textDecoration: 'underline', color: "lightgrey" }}>
+                                        <Box key={movie.movieId}><Link to={`/movie/${movie.movieId}`} style={{ textDecoration: 'underline', color: "lightgrey" }}>
                                             <Text fontSize="xl">
                                                 {movie.movieName}
                                             </Text>
@@ -77,7 +78,7 @@ function PersonPage() {
                             <Box display="flex" gap="4">
                                 <SimpleGrid columns={3} spacing={4}>
                                     {person?.actorOf.map(movie => (
-                                        <Box><Link key={movie.movieId} to={`/movie/${movie.movieId}`} style={{ textDecoration: 'underline', color: "lightgrey" }}>
+                                        <Box key={movie.movieId}><Link to={`/movie/${movie.movieId}`} style={{ textDecoration: 'underline', color: "lightgrey" }}>
                                             <Text fontSize="xl">
                                                 {movie.movieName}
                                             </Text>

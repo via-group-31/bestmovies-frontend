@@ -39,8 +39,6 @@ export default class ReviewService{
 
     public async addReview(token: string, review: Review): Promise<boolean>{
         try{
-            console.log(review);
-            
             const response = await axios.post(`${apiURL}/api/review`, review, { headers: { Authorization: `Bearer ${token}` }});
             if(response.status !== 200)
                 return false;

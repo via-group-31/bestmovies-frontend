@@ -27,9 +27,6 @@ function LoginPage() {
 
         const emailRegex = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
 
-        console.log(emailRef.current?.value.match(emailRegex)?.length);
-        
-
         if (emailRef.current?.value.match(emailRegex)?.length === undefined)
             emailMsg = "Email is in invalid format"
         if (passwordRef.current?.value !== undefined && passwordRef.current.value.length < 6)
