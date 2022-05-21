@@ -13,14 +13,16 @@ function MainPage() {
     const [moviesLoading, setMoviesLoading] = useState(true);
 
     useEffect(() => {
-        const abortion = new AbortController();
+        let mounted: boolean = true;
         
         movieService.getMovies().then(movies => {
-            setMovieList(movies);
-            setMoviesLoading(false);
+            if(mounted){
+                setMovieList(movies);
+                setMoviesLoading(false);
+            }
         });
 
-        return () => abortion.abort();
+        return () => {mounted = false};
     }, []);
 
     var settings = {

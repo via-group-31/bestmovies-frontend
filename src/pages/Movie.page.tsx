@@ -41,30 +41,30 @@ function MoviePage() {
   const reviewService: ReviewService = new ReviewService();
 
   useEffect(() => {
-    const abortion = new AbortController();
+    let mounted: boolean = true;
 
     movieService.getMoviesByMovieId(Number(movieId)).then(movie => {
-      if (movie !== null) {
+      if (mounted && movie !== null) {
         setMovie(movie);
         setMovieLoading(false);
 
         ratingService.getRatingByMovieId(movie?.movieId).then(rating => {
-          if (rating !== null) {
+          if (mounted && rating !== null) {
             setMovieRating(rating);
             setMovieRatingLoadng(false);
           }
         });
 
         reviewService.getReviewsByMovieId(movie.movieId).then(reviews => {
-          setReviews(reviews)
-          setReviewsLoading(false);
+          if(mounted){
+            setReviews(reviews)
+            setReviewsLoading(false);
+          }
         });
-
-        return () => abortion.abort();
       }
     });
 
-    return () => abortion.abort();
+    return () => {mounted = false};
   }, []);
 
   const [isFavorite, setFavorite] = useState(false);
@@ -170,7 +170,7 @@ function MoviePage() {
             <Heading mb="6">Actors</Heading>
             <Box display="flex" gap="4">
               <SimpleGrid columns={4} spacing={5}>
-                {movie?.stars.map(star => <Box><Link key={star.personId} to={"/person/" + star.personId}>{star.personName}</Link></Box>)}
+                {movie?.stars.map(star => <Box key={star.personId}><Link to={"/person/" + star.personId}>{star.personName}</Link></Box>)}
               </SimpleGrid>
             </Box>
           </Box>

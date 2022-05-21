@@ -11,6 +11,6 @@ export default class Review{
         this.reviewId = reviewId;
         this.userModel = userModel;
         this.movie = movie;
-        this.reviewContent = reviewContent
+        this.reviewContent = reviewContent;
     }
 }
