@@ -8,8 +8,6 @@ import {
   Heading,
   SimpleGrid,
   Center,
-  Divider,
-  CircularProgress,
 } from "@chakra-ui/react";
 import { Link, useParams } from "react-router-dom";
 import StarIcon from "../assets/StarIcon.component";
@@ -20,8 +18,6 @@ import Movie from "../models/Movie.model";
 import LoadingDetail from "../components/LoadingDetail.component";
 import Rating from "../models/Rating.model";
 import RatingService from "../services/Rating.service";
-import Review from "../models/Review.model";
-import ReviewService from "../services/Review.service";
 
 
 function MoviePage() {
@@ -33,38 +29,28 @@ function MoviePage() {
   const [movieRating, setMovieRating] = useState<Rating | null>(null);
   const [movieRatingLoading, setMovieRatingLoadng] = useState(true);
 
-  const [reviews, setReviews] = useState<Review[]>([]);
-  const [reviewsLoading, setReviewsLoading] = useState(true);
-
   const movieService: MovieService = new MovieService();
   const ratingService: RatingService = new RatingService();
-  const reviewService: ReviewService = new ReviewService();
+
+  const [movieList, setMovieList] = useState<Movie[]>([]);
+
+
 
   useEffect(() => {
-    let mounted: boolean = true;
-
     movieService.getMoviesByMovieId(Number(movieId)).then(movie => {
-      if (mounted && movie !== null) {
+      if (movie !== null) {
+        console.log(movie)
         setMovie(movie);
         setMovieLoading(false);
 
         ratingService.getRatingByMovieId(movie?.movieId).then(rating => {
-          if (mounted && rating !== null) {
+          if (rating !== null) {
             setMovieRating(rating);
             setMovieRatingLoadng(false);
           }
         });
-
-        reviewService.getReviewsByMovieId(movie.movieId).then(reviews => {
-          if(mounted){
-            setReviews(reviews)
-            setReviewsLoading(false);
-          }
-        });
       }
     });
-
-    return () => {mounted = false};
   }, []);
 
   const [isFavorite, setFavorite] = useState(false);
@@ -72,6 +58,27 @@ function MoviePage() {
   const [cookie, setCookie, removeCookie] = useCookies(["token"]);
 
   const toggleFavorite = () => [setFavorite(!isFavorite)];
+
+  
+  
+  //let array: (Movie | null)[] = []
+  const addToFavorites = (movie : Movie | null) =>{
+    console.log(movie)
+    let list= JSON.parse(localStorage.getItem('movie') || '[]')
+
+    list.push(movie)
+    localStorage.setItem("movie", JSON.stringify(movie))
+    // // let array = localStorage.getItem("movie") || "[]";
+    // var movie ={
+    //   movieId: movieId
+    // }
+    // list.push(movie)
+    
+    //   // array.push(movie)
+    //   console.log('retrievedObject: ', JSON.parse(list));
+
+  
+  }
 
   return (movieLoading ? <LoadingDetail /> :
     <Container maxW="container.xl">
@@ -96,9 +103,9 @@ function MoviePage() {
             {movieRatingLoading ?
               null
               :
-              <Center bg={movieRating!.rating >= 7 ? "#ba0305" : movieRating!.rating >= 3 ? "#658db4" : "#535353"}
+              <Center bg={movieRating!.rating <= 3 ? "#535353" : movieRating!.rating <= 7 ? "#658db4" : "#ba0305"}
                 h={20} borderRadius={5}>
-                <Text fontSize="3xl" fontWeight="bold">{isNaN(Number(Math.floor(movieRating!.rating * 10))) ? 0 : (Math.floor(movieRating!.rating * 10))}%</Text>
+                <Text fontSize="3xl" fontWeight="bold">{Math.floor(movieRating!.rating * 10)}%</Text>
               </Center>
             }
 
@@ -146,7 +153,7 @@ function MoviePage() {
               <Box
                 color="skyBlue"
                 fontWeight="semibold"
-                onClick={toggleFavorite}
+                onClick={function() {toggleFavorite(); addToFavorites(movie);}}
                 className={isFavorite ? "star-active" : ""}
               >
                 <Link
@@ -170,7 +177,7 @@ function MoviePage() {
             <Heading mb="6">Actors</Heading>
             <Box display="flex" gap="4">
               <SimpleGrid columns={4} spacing={5}>
-                {movie?.stars.map(star => <Box key={star.personId}><Link to={"/person/" + star.personId}>{star.personName}</Link></Box>)}
+                {movie?.stars.map(star => <Box><Link to={"/person/" + star.personId}>{star.personName}</Link></Box>)}
               </SimpleGrid>
             </Box>
           </Box>
@@ -181,21 +188,14 @@ function MoviePage() {
               Reviews
             </Heading>
             <Text fontWeight="light" color="lightgrey">
-              {reviewsLoading ? <CircularProgress size={5} isIndeterminate color="green.300"/> : `(${reviews.length} reviews)` }
+              (57 reviews)
             </Text>
+
           </Box>
 
-          <Box>
-          { reviews.map(review => 
-              <Box key={review.reviewId} p={3} mt="3" borderWidth="1px" borderRadius='lg' overflow='hidden' borderColor="grey">
-                <Text mb={2}>{review.userModel?.userEmail}</Text>
-                <Divider mb={5} />
-                <Text>{review.reviewContent}</Text>
-              </Box>
-            ) 
-          }
+          <Box display="flex" alignItems="center" mt="10">
+
           </Box>
-          
         </GridItem>
       </Grid>
     </Container>
