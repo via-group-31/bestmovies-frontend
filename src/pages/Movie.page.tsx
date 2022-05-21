@@ -22,7 +22,7 @@ import Rating from "../models/Rating.model";
 import RatingService from "../services/Rating.service";
 import Review from "../models/Review.model";
 import ReviewService from "../services/Review.service";
-
+import UserService from "../services/User.service";
 
 function MoviePage() {
   const { movieId } = useParams();
@@ -36,44 +36,73 @@ function MoviePage() {
   const [reviews, setReviews] = useState<Review[]>([]);
   const [reviewsLoading, setReviewsLoading] = useState(true);
 
+  const [favoriteMovie, setFavoriteMovie] = useState(false);
+  const [favoriteMovieLoading, setFavoriteMovieLoading] = useState(true);
+
   const movieService: MovieService = new MovieService();
   const ratingService: RatingService = new RatingService();
   const reviewService: ReviewService = new ReviewService();
+  const userService: UserService = new UserService();
 
   useEffect(() => {
     let mounted: boolean = true;
 
-    movieService.getMoviesByMovieId(Number(movieId)).then(movie => {
+    movieService.getMoviesByMovieId(Number(movieId)).then((movie) => {
       if (mounted && movie !== null) {
         setMovie(movie);
         setMovieLoading(false);
-
-        ratingService.getRatingByMovieId(movie?.movieId).then(rating => {
-          if (mounted && rating !== null) {
-            setMovieRating(rating);
-            setMovieRatingLoadng(false);
-          }
-        });
-
-        reviewService.getReviewsByMovieId(movie.movieId).then(reviews => {
-          if(mounted){
-            setReviews(reviews)
-            setReviewsLoading(false);
-          }
-        });
       }
     });
 
-    return () => {mounted = false};
-  }, []);
+    ratingService.getRatingByMovieId(Number(movieId)).then((rating) => {
+      if (mounted && rating !== null) {
+        setMovieRating(rating);
+        setMovieRatingLoadng(false);
+      }
+    });
 
-  const [isFavorite, setFavorite] = useState(false);
+    reviewService.getReviewsByMovieId(Number(movieId)).then((reviews) => {
+      if (mounted) {
+        setReviews(reviews);
+        setReviewsLoading(false);
+      }
+    });
+
+    userService.getFavoriteMovie(cookie.token, Number(movieId)).then((res) => {
+      // TODO: test
+      if (mounted) {
+        setFavoriteMovie(res);
+        setFavoriteMovieLoading(false);
+      }
+    });
+
+    return () => {
+      mounted = false;
+    };
+  }, []);
 
   const [cookie, setCookie, removeCookie] = useCookies(["token"]);
 
-  const toggleFavorite = () => [setFavorite(!isFavorite)];
+  const toggleFavorite = () => {
+    // TODO: test
+    setFavoriteMovieLoading(true);
+    if (favoriteMovie) {
+      userService.deleteFromFavorites(cookie.token, Number(movieId)).then(() => {
+        setFavoriteMovieLoading(false);
+        setFavoriteMovie(false);
+      });
+    } 
+    else {
+      userService.addToFavorites(cookie.token, Number(movieId)).then(() => {
+        setFavoriteMovieLoading(false);
+        setFavoriteMovie(true);
+      });
+    }
+  };
 
-  return (movieLoading ? <LoadingDetail /> :
+  return movieLoading ? (
+    <LoadingDetail />
+  ) : (
     <Container maxW="container.xl">
       <Grid
         templateColumns="300px 1fr"
@@ -85,7 +114,11 @@ function MoviePage() {
         <GridItem position="sticky" top="8">
           <Box>
             <Image
-              src={movie?.moviePoster === "N/A" ? `${process.env.PUBLIC_URL}/assets/images.jpg` : movie?.moviePoster}
+              src={
+                movie?.moviePoster === "N/A"
+                  ? `${process.env.PUBLIC_URL}/assets/images.jpg`
+                  : movie?.moviePoster
+              }
               alt="Dan Abramov"
               rounded="md"
               height="400px"
@@ -93,15 +126,26 @@ function MoviePage() {
               maxH="400px"
               objectFit="cover"
             />
-            {movieRatingLoading ?
-              null
-              :
-              <Center bg={movieRating!.rating >= 7 ? "#ba0305" : movieRating!.rating >= 3 ? "#658db4" : "#535353"}
-                h={20} borderRadius={5}>
-                <Text fontSize="3xl" fontWeight="bold">{isNaN(Number(Math.floor(movieRating!.rating * 10))) ? 0 : (Math.floor(movieRating!.rating * 10))}%</Text>
+            {movieRatingLoading ? null : (
+              <Center
+                bg={
+                  movieRating!.rating >= 7
+                    ? "#ba0305"
+                    : movieRating!.rating >= 3
+                    ? "#658db4"
+                    : "#535353"
+                }
+                h={20}
+                borderRadius={5}
+              >
+                <Text fontSize="3xl" fontWeight="bold">
+                  {isNaN(Number(Math.floor(movieRating!.rating * 10)))
+                    ? 0
+                    : Math.floor(movieRating!.rating * 10)}
+                  %
+                </Text>
               </Center>
-            }
-
+            )}
           </Box>
         </GridItem>
         <GridItem>
@@ -127,9 +171,16 @@ function MoviePage() {
               <Text mr="2" color="lightgrey" fontWeight="medium">
                 Directed by
               </Text>
-              {movie?.directors.map(director =>
-                <Link key={director.personId} style={{ textDecoration: "underline", fontWeight: "bold" }} to={`/person/${director.personId}`}> {director.personName + " "} </Link>)
-              }
+              {movie?.directors.map((director) => (
+                <Link
+                  key={director.personId}
+                  style={{ textDecoration: "underline", fontWeight: "bold" }}
+                  to={`/person/${director.personId}`}
+                >
+                  {" "}
+                  {director.personName + " "}{" "}
+                </Link>
+              ))}
             </Box>
           </Box>
 
@@ -143,25 +194,29 @@ function MoviePage() {
             alignItems="center"
           >
             {cookie.token !== undefined ? (
-              <Box
-                color="skyBlue"
-                fontWeight="semibold"
-                onClick={toggleFavorite}
-                className={isFavorite ? "star-active" : ""}
-              >
-                <Link
-                  to="#"
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "0.5rem",
-                  }}
+              { favoriteMovieLoading } ? (
+                <CircularProgress size={5} isIndeterminate color="green.300" />
+              ) : (
+                <Box
                   color="skyBlue"
+                  fontWeight="semibold"
+                  onClick={toggleFavorite}
+                  className={favoriteMovie ? "star-active" : ""}
                 >
-                  Add to favorites
-                  <StarIcon />
-                </Link>
-              </Box>
+                  <Link
+                    to="#"
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "0.5rem",
+                    }}
+                    color="skyBlue"
+                  >
+                    Add to favorites
+                    <StarIcon />
+                  </Link>
+                </Box>
+              )
             ) : null}
           </Box>
           {/* actors  */}
@@ -170,7 +225,13 @@ function MoviePage() {
             <Heading mb="6">Actors</Heading>
             <Box display="flex" gap="4">
               <SimpleGrid columns={4} spacing={5}>
-                {movie?.stars.map(star => <Box key={star.personId}><Link to={"/person/" + star.personId}>{star.personName}</Link></Box>)}
+                {movie?.stars.map((star) => (
+                  <Box key={star.personId}>
+                    <Link to={"/person/" + star.personId}>
+                      {star.personName}
+                    </Link>
+                  </Box>
+                ))}
               </SimpleGrid>
             </Box>
           </Box>
@@ -181,21 +242,31 @@ function MoviePage() {
               Reviews
             </Heading>
             <Text fontWeight="light" color="lightgrey">
-              {reviewsLoading ? <CircularProgress size={5} isIndeterminate color="green.300"/> : `(${reviews.length} reviews)` }
+              {reviewsLoading ? (
+                <CircularProgress size={5} isIndeterminate color="green.300" />
+              ) : (
+                `(${reviews.length} reviews)`
+              )}
             </Text>
           </Box>
 
           <Box>
-          { reviews.map(review => 
-              <Box key={review.reviewId} p={3} mt="3" borderWidth="1px" borderRadius='lg' overflow='hidden' borderColor="grey">
+            {reviews.map((review) => (
+              <Box
+                key={review.reviewId}
+                p={3}
+                mt="3"
+                borderWidth="1px"
+                borderRadius="lg"
+                overflow="hidden"
+                borderColor="grey"
+              >
                 <Text mb={2}>{review.userModel?.userEmail}</Text>
                 <Divider mb={5} />
                 <Text>{review.reviewContent}</Text>
               </Box>
-            ) 
-          }
+            ))}
           </Box>
-          
         </GridItem>
       </Grid>
     </Container>

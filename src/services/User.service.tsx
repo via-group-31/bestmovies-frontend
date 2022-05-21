@@ -43,7 +43,7 @@ export default class UserService{
         let movieList: Movie[];
 
         try{
-            const response = await axios.get(`${apiURL}/api/auth/favorites`, {headers: { Authorization: `Bearer ${token}` }});
+            const response = await axios.get(`${apiURL}/api/user/favorites`, {headers: { Authorization: `Bearer ${token}` }});
 
             if(response.status !== 200)
                 return [];
@@ -60,9 +60,8 @@ export default class UserService{
     }
 
     public async addToFavorites(token: string, movieId: number): Promise<boolean>{
-        // TESTED API DOES NTO WORK
         try{
-            const response = await axios.post(`${apiURL}/api/auth/favorites?movieId${movieId}`, { headers: { Authorization: `Bearer ${token}` }});
+            const response = await axios.post(`${apiURL}/api/user/favorites?movieId${movieId}`, { headers: { Authorization: `Bearer ${token}` }});
 
             if(response.status === 200)
                 return true;
@@ -77,9 +76,8 @@ export default class UserService{
     }
 
     public async deleteFromFavorites(token: string, movieId: number): Promise<boolean>{
-        // TESTED API DOES NTO WORK
         try{
-            const response = await axios.delete(`${apiURL}/api/auth/favorites?movieId=${movieId}`, { headers: { Authorization: `Bearer ${token}` }});
+            const response = await axios.delete(`${apiURL}/api/user/favorites?movieId=${movieId}`, { headers: { Authorization: `Bearer ${token}` }});
 
             if(response.status === 200)
                 return true;
@@ -93,7 +91,19 @@ export default class UserService{
         }
     }
 
-    public isLoggedIn(token: string): boolean{
-        return true;
+    public async getFavoriteMovie(token: string, movieId: number): Promise<boolean>{
+        try{
+            const response = await axios.get(`${apiURL}/api/user/favoritesList?movieId=${movieId}`, { headers: { Authorization: `Bearer ${token}` }});
+
+            if(response.status === 200)
+                return true;
+
+            return false;
+            
+        } catch(error) {
+            console.error(error);
+
+            return false;
+        }
     }
 }
