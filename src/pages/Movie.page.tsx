@@ -10,6 +10,7 @@ import {
   Center,
   Divider,
   CircularProgress,
+  Tooltip,
 } from "@chakra-ui/react";
 import { Link, useParams } from "react-router-dom";
 import StarIcon from "../assets/StarIcon.component";
@@ -201,7 +202,8 @@ function MoviePage() {
                favoriteMovieLoading ? (
                 <CircularProgress size={5} isIndeterminate color="green.300" />
               ) : (
-                <Box
+                <Tooltip label={favoriteMovie ? "Remove from favorites" : "Add to favorites"} fontSize='md'>
+                  <Box
                   color="skyBlue"
                   fontWeight="semibold"
                   onClick={toggleFavorite}
@@ -220,6 +222,7 @@ function MoviePage() {
                     <StarIcon />
                   </Link>
                 </Box>
+                </Tooltip>
               )
             ) : null}
           </Box>
