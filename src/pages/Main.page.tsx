@@ -63,7 +63,11 @@ function MainPage() {
                     movieList.map(movie => (
                         <Link key={movie.movieId} to={`/movie/${movie.movieId}`} style={{ textDecoration: "none" }} className={'featured-link'} >
                             <Box position="relative" rounded="md" >
-                                <Image src={movie.moviePoster} height={600} />
+                                <Image src={
+                                    movie?.moviePoster === "N/A"
+                                    ? `${process.env.PUBLIC_URL}/assets/images.jpg`
+                                    : movie?.moviePoster
+                                } height={600} />
                                 <Box className={'featured-box'} px="4">
 
                                     <Text mt="8">
