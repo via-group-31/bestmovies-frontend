@@ -1,4 +1,3 @@
-import { StarIcon } from "@chakra-ui/icons";
 import { Box, Container, Grid, GridItem, Heading, Text, Image, SimpleGrid } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";

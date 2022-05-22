@@ -11,7 +11,6 @@ import {
   Divider,
   CircularProgress,
   Tooltip,
-  Input,
   Textarea,
   Button,
   HStack,
@@ -28,7 +27,7 @@ import RatingService from "../services/Rating.service";
 import Review from "../models/Review.model";
 import ReviewService from "../services/Review.service";
 import UserService from "../services/User.service";
-import { blue, darkBlue, white } from "../constants";
+import { blue, white } from "../constants";
 import UserModel from "../models/UsersModel.model";
 
 function MoviePage() {
