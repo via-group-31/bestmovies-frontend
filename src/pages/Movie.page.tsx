@@ -11,6 +11,10 @@ import {
   Divider,
   CircularProgress,
   Tooltip,
+  Input,
+  Textarea,
+  Button,
+  HStack,
 } from "@chakra-ui/react";
 import { Link, useParams } from "react-router-dom";
 import StarIcon from "../assets/StarIcon.component";
@@ -24,6 +28,8 @@ import RatingService from "../services/Rating.service";
 import Review from "../models/Review.model";
 import ReviewService from "../services/Review.service";
 import UserService from "../services/User.service";
+import { blue, darkBlue, white } from "../constants";
+import UserModel from "../models/UsersModel.model";
 
 function MoviePage() {
   const { movieId } = useParams();
@@ -39,6 +45,9 @@ function MoviePage() {
 
   const [favoriteMovie, setFavoriteMovie] = useState(false);
   const [favoriteMovieLoading, setFavoriteMovieLoading] = useState(true);
+
+  const [reviewToAdd, setReviewToAdd] = useState("");
+  const [buttonLoading, setButtonLoading] = useState(false);
 
   const movieService: MovieService = new MovieService();
   const ratingService: RatingService = new RatingService();
@@ -70,8 +79,6 @@ function MoviePage() {
     });
 
     userService.getFavoriteMovie(cookie.token, Number(movieId)).then((res) => {
-      console.log(res);
-      
       if (mounted) {
         setFavoriteMovie(res);
         setFavoriteMovieLoading(false);
@@ -88,7 +95,6 @@ function MoviePage() {
   const toggleFavorite = () => {
     setFavoriteMovieLoading(true);
     if (favoriteMovie) {
-      console.log("Here I sit");
 
       userService.deleteFromFavorites(cookie.token, Number(movieId)).then(() => {
         setFavoriteMovieLoading(false);
@@ -96,7 +102,6 @@ function MoviePage() {
       });
     } 
     else {
-      console.log("Here I stand");
       
       userService.addToFavorites(cookie.token, Number(movieId)).then(() => {
         setFavoriteMovieLoading(false);
@@ -104,6 +109,24 @@ function MoviePage() {
       });
     }
   };
+
+  const handleRating = () => {
+    if(reviewToAdd.length > 0){
+      setButtonLoading(true);
+      const user: UserModel = new UserModel(cookie.token);;
+      const reviewModel: Review = new Review();
+      reviewModel.reviewContent = reviewToAdd;
+      reviewModel.userModel = user;
+      reviewModel.movie = movie;
+      console.log(reviewModel.toJson());
+      
+      reviewService.addReview(cookie.token, reviewModel.toJson()).then(() => {
+        reviews.push(reviewModel);
+        setButtonLoading(false);
+        setReviewToAdd("");
+      });
+    }
+};
 
   return movieLoading ? (
     <LoadingDetail />
@@ -257,10 +280,21 @@ function MoviePage() {
             </Text>
           </Box>
 
+          {cookie.token !== undefined ? 
+          <HStack>
+          <Textarea value={reviewToAdd} resize="none" rows={5} onChange={(value: any) => setReviewToAdd(value.target.value)} />
+          <Button bg={blue} color={white} height={120} width={120}
+                isLoading={buttonLoading} loadingText="Signing in" onClick={handleRating}
+                >
+                    Submit
+          </Button>
+      </HStack> : null
+          }
+
           <Box>
-            {reviews.map((review) => (
+            {reviews.map((review, i) => (
               <Box
-                key={review.reviewId}
+                key={i}
                 p={3}
                 mt="3"
                 borderWidth="1px"

@@ -13,4 +13,13 @@ export default class Review{
         this.movie = movie;
         this.reviewContent = reviewContent;
     }
+
+    public toJson(){
+        return {
+            movie: {
+                movieId: this.movie?.movieId
+            },
+            reviewContent: this.reviewContent
+        };
+    }
 }

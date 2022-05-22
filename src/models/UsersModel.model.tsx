@@ -1,13 +1,9 @@
 export default class UserModel{
-    public userId: number;
     public userEmail: string;
-    public userPassword: string;
     public accessToken: string;
 
-    constructor(userId: number, userEmail: string, userPassword: string, accessToken: string){
-        this.userId = userId;
-        this.userEmail = userEmail;
-        this.userPassword = userPassword;
+    constructor(accessToken: string){
         this.accessToken = accessToken;
+        this.userEmail = atob(accessToken.split(".")[1]).match(/:(\"|\[\")(.*?)\"/gm)![0].replace(/"/gm, "").replace(":", "");
     }
 }
