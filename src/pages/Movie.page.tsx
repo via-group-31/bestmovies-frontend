@@ -87,7 +87,7 @@ function MoviePage() {
     return () => {
       mounted = false;
     };
-  }, []);
+  }, [movieId]);
 
   const [cookie, setCookie, removeCookie] = useCookies(["token"]);
 

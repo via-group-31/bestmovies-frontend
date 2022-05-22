@@ -16,6 +16,7 @@ function SearchPage() {
 
     useEffect(() => {
         let mounted: boolean = true;
+        setMoviesLoading(true);
 
         movieService.getMoviesByMovieName(String(search)).then(moviesSearch => {
             if(mounted){
@@ -25,7 +26,7 @@ function SearchPage() {
         });
 
         return () => {mounted = false;}
-    }, []);
+    }, [search]);
     
     return ( 
         <Container maxW='md'>

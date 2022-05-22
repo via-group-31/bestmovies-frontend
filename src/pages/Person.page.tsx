@@ -16,6 +16,7 @@ function PersonPage() {
 
     useEffect(() => {
         let mounted: boolean = true;
+        setPersonLoading(true);
         personService.getPersonByPersonId(Number(personId)).then(person => {
             if (mounted && person !== null) {
                 setPerson(person);
@@ -24,7 +25,7 @@ function PersonPage() {
         });
 
         return () => {mounted = false;}
-    }, []);
+    }, [personId]);
 
     return (personLoading ? <LoadingDetail /> :
         <Container maxW='container.xl' >
