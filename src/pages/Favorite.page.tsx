@@ -6,52 +6,30 @@ import { useCookies } from "react-cookie";
 import { Link, useParams } from "react-router-dom";
 import Movie from "../models/Movie.model";
 
-const handleDelete = () => {
-    alert("Button Clicked!");
-};
-
-
 function FavoritePage() {
-    const [favoriteMovie, setFavoriteMovie] = useState<Movie[]>([]);
+    const [favoriteMovie, setFavoriteMovie] = useState<Movie[]>(JSON.parse(localStorage.getItem('favoriteMovie')!));
 
     const userService: UserService = new UserService();
-    const [favoriteMovieLoading, setFavoriteMovieLoading] = useState(true);
     const [cookie, setCookie, removeCookie] = useCookies(["token"]);
 
-    const { movieId } = useParams();
-
-    const list: string | null  = localStorage.getItem('favoriteMovie')
+        const onDelete = (movie: Movie) => {
     
-    useEffect(() => {
-        let mounted: boolean = true;
-        
-        if(  list !== null ){
-
-            setFavoriteMovie(JSON.parse(list))
-            setFavoriteMovieLoading(false);
-
-        } else{
-             userService.getFavorites(cookie.token).then((res) => {
-            if (mounted) {
-
-                console.log(res)
-                localStorage.setItem('favoriteMovie', JSON.stringify(res))
-                setFavoriteMovie(res);
-                setFavoriteMovieLoading(false);
-            }
-            });
-        }
-
-        
-        return () => {
-          mounted = false;
-        };
-
-      }, [list]);
+          userService.deleteFromFavorites(cookie.token, movie.movieId);
+          
+          (favoriteMovie.filter((e, i) => {
+              
+              if(e === movie){
+                favoriteMovie.splice(i, 1);
+                console.log(e);
+              }
+          }));
+          
+          localStorage.setItem('favoriteMovie', JSON.stringify(favoriteMovie));
+          setFavoriteMovie(JSON.parse(localStorage.getItem('favoriteMovie')!));
+      };
 
 
     return ( 
-        <>
            <Container maxW='container.lg'>
                <Heading fontSize='6xl' mb="2"> Favorite movies</Heading>
                
@@ -72,7 +50,7 @@ function FavoritePage() {
                                 image={n.moviePoster}
                                 year={n.year}
                                 id={n.movieId}
-                               
+                                onDelete ={() => onDelete(n)}
 
                             />
                     </GridItem>;
@@ -82,7 +60,6 @@ function FavoritePage() {
                </Grid>
                
             </Container>
-        </>
      );
 }
 

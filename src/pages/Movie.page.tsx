@@ -108,9 +108,9 @@ function MoviePage() {
       });
 
       if(movieList.length > 0 ){
-        movieList.filter( (e, i) =>{
+        movieList.filter( (e, i) => {
           if(e.movieId === Number(movieId)){
-            movieList.splice(i)
+            movieList.splice(i, 1)
           }
         })
       }

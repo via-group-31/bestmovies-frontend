@@ -44,7 +44,7 @@ function NavbarAvatar () {
 
     const [cookie, setCookie, removeCookie] = useCookies(['token']);
     let navigate = useNavigate(); 
-    let favoriteMoviesLenght = localStorage.getItem('favoriteMovie')
+    let favoriteMoviesLenght = JSON.parse(localStorage.getItem('favoriteMovie')!).length
 
     return ( 
         <Menu>
@@ -54,7 +54,7 @@ function NavbarAvatar () {
                     <Link to="/favorites" style={{width: '100%'}}>  
                         <Text display="flex" justifyContent="space-between">Favorites 
                             {favoriteMoviesLenght !== null ?  
-                                <Text bg="skyBlue" rounded="full" px="2" fontWeight="bold">{JSON.parse(favoriteMoviesLenght).length} </Text> 
+                                <Text bg="skyBlue" rounded="full" px="2" fontWeight="bold">{favoriteMoviesLenght} </Text> 
                                 : ''}
                            
                                 
@@ -65,6 +65,7 @@ function NavbarAvatar () {
                 </MenuItem>
                 <MenuItem onClick={ () => {
                     removeCookie("token");
+                    localStorage.removeItem('favoriteMovie');
                     navigate("/");
                 } }><Link to="/">Logout</Link></MenuItem>
             </MenuList>

@@ -50,19 +50,22 @@ function LoginPage() {
                     });
                 }
                 else{
-                    setCookie("token", token);
-                    
-                    toast({
-                        title: 'Logged in.',
-                        description: "You are now logged in.",
-                        status: 'success',
-                        duration: 9000,
-                        isClosable: true,
+                    userService.getFavorites(token).then(favs => {
+                        localStorage.setItem('favoriteMovie', JSON.stringify(favs));
+                        setCookie("token", token);
+                        
+                        toast({
+                            title: 'Logged in.',
+                            description: "You are now logged in.",
+                            status: 'success',
+                            duration: 9000,
+                            isClosable: true,
+                        });
+    
+                        setButtonLoading(false);
+                        navigate("/");
                     });
-
-                    navigate("/");
                 }
-                setButtonLoading(false);
             });
         }
     };
