@@ -12,6 +12,7 @@ import { blue, defaultPadding } from './constants';
 import FourOhFour from './pages/404.page';
 import { useCookies } from 'react-cookie';
 import PersonPage from './pages/Person.page';
+import SearchPage from './pages/Search.page';
 
 function App() {
 
@@ -31,6 +32,7 @@ function App() {
       <Route path='/favorites' element={ cookie.token !== undefined ? <FavoritePage /> : <FourOhFour /> } />
       <Route path='/movie/:movieId' element={ <MoviePage /> } />
       <Route path='/person/:personId' element={ <PersonPage /> } />
+      <Route path='/search/:search' element={ <SearchPage /> } />
 
       <Route path='*' element={ <FourOhFour /> } />
     </Routes>

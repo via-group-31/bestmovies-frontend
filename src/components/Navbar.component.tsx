@@ -1,11 +1,9 @@
-import { Avatar, Box, SimpleGrid , GridItem, MenuList, Text, FormControl, Menu, MenuButton, MenuItem, Image, Grid } from "@chakra-ui/react";
-import { AutoComplete, AutoCompleteInput, AutoCompleteItem, AutoCompleteList } from "@choc-ui/chakra-autocomplete";
+import { Avatar, Box, SimpleGrid , GridItem, MenuList, Text, Menu, MenuButton, MenuItem, Input } from "@chakra-ui/react";
+import { useState } from "react";
 import { useCookies } from "react-cookie";
 import { Link, useNavigate } from "react-router-dom";
 import { black, blue, darkBlue, defaultPadding, white } from "../constants";
-import Human from "../models/Person.model";
-import Movie from "../models/Movie.model";
-import UserService from "../services/User.service";
+
 type NavbarProps = {
     title: string,
     loggedIn: boolean
@@ -13,17 +11,8 @@ type NavbarProps = {
 
 function Navbar(props: NavbarProps) {
 
+    const [search, setSearch] = useState("");
     let navigate = useNavigate(); 
-
-    const actors: Human[] = [];
-    actors.push(new Human(1, "John Doe", 20, [], []));
-    actors.push(new Human(2, "Jane Doe", 21, [], []));
-    actors.push(new Human(3, "Bob Bobber", 22, [], []));
-
-    const movies: Movie[] = [];
-    movies.push(new Movie(1, "Pulp fiction", 1994, actors, actors, ""));
-    movies.push(new Movie(2, "Avatar 2", 2023, actors, actors, ""));
-    movies.push(new Movie(3, "Doctor Strange 2", 2022, actors, actors, ""));
 
     return ( 
         <Box bg={darkBlue} w='100%' p={4} color='white'>
@@ -34,50 +23,18 @@ function Navbar(props: NavbarProps) {
                     </Text>
                 </GridItem>
                 <GridItem maxW="790px" margin="0 auto" w="100%">
-                    <FormControl id="movie" w="100%" color={black}>
-                        <AutoComplete>
-                            <AutoCompleteInput placeholder="Search" bgColor={white} />
-                            <AutoCompleteList>
-                                 {movies.map((movie, mid) => {
-                                     const routeChange = () =>{ 
-                                       let path = `/movie/${movie.movieId}`; 
-                                       navigate(path);
-                                     }
-
-                                     return (
-                                        <AutoCompleteItem
-                                            key={`option-${mid}`}
-                                            value={movie.movieName}
-                                            textTransform="capitalize"
-                                            align="center"
-                                            onClick={routeChange}
-                                        >
-                                            <Grid h='200px' gap={4} templateRows='repeat(4, 1fr)' templateColumns='repeat(4, 1fr)'>
-                                                {/* <GridItem rowSpan={4} colSpan={1}>
-                                                    <Image src={movie.image} h="200px"  objectFit="cover" />
-                                                </GridItem> */}
-                                                <GridItem colSpan={2}>
-                                                    <Text fontSize="xl" fontWeight="semibold">{movie.movieName}</Text>
-                                                </GridItem>
-                                                <GridItem colSpan={2} fontSize="md" mt="-4">
-                                                    {movie.year}
-                                                </GridItem>
-                                                <GridItem colSpan={2} mt="-10" fontSize="xl">
-
-                                                    {movie.stars.map((star, index) => (index? ', ' : '') + star.personName )}
-                                                </GridItem>
-                                            </Grid>
-                                        </AutoCompleteItem>
-                                    );
-                                 })}
-                            </AutoCompleteList>
-                        </AutoComplete>
-                    </FormControl>
+                    <Input
+                        placeholder="Search" 
+                        _placeholder={{ color: 'grey' }} 
+                        bg={white} 
+                        color={black} 
+                        onKeyDown={(e: any) => e.keyCode === 13 ? navigate(`/search/${search}`) : null}
+                        onChange={ (value: any) => setSearch(value.target.value) }
+                     />
                 </GridItem>
                 <GridItem pr={defaultPadding/2} pt={2} textAlign="right"  alignItems="center" >
                     { props.loggedIn ? <NavbarAvatar /> : <Text><Link to="/login">Sign in</Link></Text> }
                 </GridItem>
-                
             </SimpleGrid >
         </Box>
     );
