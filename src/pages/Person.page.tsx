@@ -31,7 +31,7 @@ function PersonPage() {
         <Container maxW='container.xl' >
             <Grid templateColumns='repeat(5, 1fr)' gap="8">
                 <GridItem colSpan={1} width="100%">
-                    <Image src='https://cryptorenaissance.org/img/gigachad.ab28dd28.png' alt='Dan Abramov' rounded="md" height="auto" width="100%" objectFit="cover" />
+                    <Image src={person?.personImage === 'N/A' ? "'https://cryptorenaissance.org/img/gigachad.ab28dd28.png'" : person?.personImage} alt='Dan Abramov' rounded="md" height="auto" width="100%" objectFit="cover" />
                 </GridItem>
                 <GridItem colStart={2} colEnd={6} h='10' >
                     {/* headline */}
