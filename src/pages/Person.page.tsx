@@ -37,7 +37,7 @@ function PersonPage() {
                     {/* headline */}
 
                     <Heading fontWeight="black" fontSize="5xl">
-                        {person?.personName}  {person?.personBirth !== null ? "Born * " + person?.personBirth : null}
+                        {person?.personName}  {person?.personBirth !== null ? "(Born * " + person?.personBirth + ")" : null}
                     </Heading>
 
                     {/* category, duration, add to-favorites  */}

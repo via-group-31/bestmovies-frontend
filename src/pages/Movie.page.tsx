@@ -27,7 +27,7 @@ import RatingService from "../services/Rating.service";
 import Review from "../models/Review.model";
 import ReviewService from "../services/Review.service";
 import UserService from "../services/User.service";
-import { blue, white } from "../constants";
+import { blue, skyBlue, white } from "../constants";
 import UserModel from "../models/UsersModel.model";
 
 function MoviePage() {
@@ -222,7 +222,7 @@ function MoviePage() {
           >
             {cookie.token !== undefined ? (
                favoriteMovieLoading ? (
-                <CircularProgress size={5} isIndeterminate color="green.300" />
+                <CircularProgress size={5} isIndeterminate color={skyBlue} />
               ) : (
                 <Tooltip label={favoriteMovie ? "Remove from favorites" : "Add to favorites"} fontSize='md'>
                   <Box
@@ -272,7 +272,7 @@ function MoviePage() {
             </Heading>
             <Text fontWeight="light" color="lightgrey">
               {reviewsLoading ? (
-                <CircularProgress size={5} isIndeterminate color="green.300" />
+                <CircularProgress size={5} isIndeterminate color={skyBlue} />
               ) : (
                 `(${reviews.length} reviews)`
               )}
