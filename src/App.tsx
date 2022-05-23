@@ -18,15 +18,6 @@ import { useEffect } from 'react';
 function App() {
 
   const [cookie, setCookie, removeCookie] = useCookies(['token']);
-  const favoriteMovies = localStorage.getItem('favoriteMovie');
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if(favoriteMovies === null){
-      removeCookie("token");
-      navigate("/login");
-    }
-  }, [favoriteMovies]);
 
   return (
     <>

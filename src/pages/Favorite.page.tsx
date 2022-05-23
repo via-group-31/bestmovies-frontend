@@ -3,30 +3,37 @@ import Card from '../components/Card.component'
 import UserService from "../services/User.service";
 import { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import Movie from "../models/Movie.model";
 
 function FavoritePage() {
-    const [favoriteMovie, setFavoriteMovie] = useState<Movie[]>(JSON.parse(localStorage.getItem('favoriteMovie')!));
+    const [favoriteMovie, setFavoriteMovie] = useState<Movie[] | null>(JSON.parse(localStorage.getItem('favoriteMovie')!));
 
     const userService: UserService = new UserService();
     const [cookie, setCookie, removeCookie] = useCookies(["token"]);
 
-        const onDelete = (movie: Movie) => {
+    const navigate = useNavigate();
     
-          userService.deleteFromFavorites(cookie.token, movie.movieId);
-          
-          (favoriteMovie.filter((e, i) => {
-              
-              if(e === movie){
-                favoriteMovie.splice(i, 1);
-                console.log(e);
-              }
-          }));
-          
-          localStorage.setItem('favoriteMovie', JSON.stringify(favoriteMovie));
-          setFavoriteMovie(JSON.parse(localStorage.getItem('favoriteMovie')!));
-      };
+    if(favoriteMovie === null && cookie.token){
+        removeCookie("token");
+        navigate("/login");
+    }
+
+    const onDelete = (movie: Movie) => {
+
+        userService.deleteFromFavorites(cookie.token, movie.movieId);
+        
+        (favoriteMovie!.filter((e, i) => {
+            
+            if(e === movie){
+            favoriteMovie!.splice(i, 1);
+            console.log(e);
+            }
+        }));
+        
+        localStorage.setItem('favoriteMovie', JSON.stringify(favoriteMovie));
+        setFavoriteMovie(JSON.parse(localStorage.getItem('favoriteMovie')!));
+    };
 
 
     return ( 
@@ -35,7 +42,7 @@ function FavoritePage() {
                
                <Flex fontSize="2xl" mb="4">
                    <Text flex="flex" mr="4"> 
-                        {favoriteMovie.length}
+                        {favoriteMovie!.length}
                     </Text>
                    <Text>titles</Text>
                </Flex>
@@ -44,7 +51,7 @@ function FavoritePage() {
 
                 
 
-               {favoriteMovie.map((n, i) => {
+               {favoriteMovie!.map((n, i) => {
                 return <GridItem key={i} >
                         <Card title={n.movieName}
                                 image={n.moviePoster}
