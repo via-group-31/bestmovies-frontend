@@ -48,6 +48,7 @@ function LoginPage() {
                         emailErr: 'Wrong username or password',
                         passwordErr: ''
                     });
+                    setButtonLoading(false);
                 }
                 else{
                     userService.getFavorites(token).then(favs => {
