@@ -42,7 +42,7 @@ jobs:
     - name: yarn install, build
       run: |
         yarn install
-        yarn build
+        CI=false yarn build
 
     # - name: npm install, build, and test
     #   run: |
