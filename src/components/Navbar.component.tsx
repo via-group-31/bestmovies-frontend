@@ -44,22 +44,14 @@ function NavbarAvatar () {
 
     const [cookie, setCookie, removeCookie] = useCookies(['token']);
     let navigate = useNavigate(); 
-    let favoriteMoviesLenght = JSON.parse(localStorage.getItem('favoriteMovie')!).length
-
     return ( 
         <Menu>
             <MenuButton as={Avatar} boxSize="30px" ></MenuButton>
             <MenuList color={black}>
                 <MenuItem >
                     <Link to="/favorites" style={{width: '100%'}}>  
-                        <Text display="flex" justifyContent="space-between">Favorites 
-                            {favoriteMoviesLenght !== null ?  
-                                <Text bg="skyBlue" rounded="full" px="2" fontWeight="bold">{favoriteMoviesLenght} </Text> 
-                                : ''}
-                           
-                                
-                            
-                        
+                        <Text display="flex" justifyContent="space-between">
+                            Favorites 
                         </Text>
                     </Link>
                 </MenuItem>
