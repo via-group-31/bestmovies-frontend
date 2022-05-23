@@ -16,7 +16,6 @@ function FavoritePage() {
     
     if(favoriteMovie === null && cookie.token){
         removeCookie("token");
-        navigate("/login");
     }
 
     const onDelete = (movie: Movie) => {
