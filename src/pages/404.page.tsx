@@ -1,9 +1,10 @@
-import { Container, Text } from "@chakra-ui/react";
+import { Center, Container, Text } from "@chakra-ui/react";
 
 function FourOhFour() {
     return ( 
         <Container>
-            <Text>404</Text>
+            <Center><Text fontSize="5xl" fontWeight="bold">404 Page not found :(</Text></Center>
+            
         </Container>
      );
 }
