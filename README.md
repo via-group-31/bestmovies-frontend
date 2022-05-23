@@ -9,7 +9,7 @@
 - react-slick is used on main page for displaying newest movies
 
 ### Azure
-- Website is running on Azure as a WebApp node.js service [a link](https://bestmovies-group-31.azurewebsites.net/)
+- Website is running on [Azure](https://bestmovies-group-31.azurewebsites.net/) as a WebApp node.js service 
 
 ### Github Actions
 - With each push to main app is built and uploaded to AZURE and app is refreshed
