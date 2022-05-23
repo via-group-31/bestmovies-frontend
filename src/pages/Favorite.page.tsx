@@ -1,4 +1,4 @@
-import { Container, Heading, Text, Flex,  Grid, GridItem, list,} from "@chakra-ui/react";
+import { Container, Heading, Text, Flex,  Grid, GridItem, list, Box,} from "@chakra-ui/react";
 import Card from '../components/Card.component'
 import UserService from "../services/User.service";
 import { useEffect, useState } from "react";
@@ -36,7 +36,7 @@ function FavoritePage() {
     };
 
 
-    return ( 
+    return favoriteMovie === null ? <Box /> : ( 
            <Container maxW='container.lg'>
                <Heading fontSize='6xl' mb="2"> Favorite movies</Heading>
                
