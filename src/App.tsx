@@ -13,6 +13,7 @@ import FourOhFour from './pages/404.page';
 import { useCookies } from 'react-cookie';
 import PersonPage from './pages/Person.page';
 import SearchPage from './pages/Search.page';
+import { useEffect } from 'react';
 
 function App() {
 
@@ -20,10 +21,12 @@ function App() {
   const favoriteMovies = localStorage.getItem('favoriteMovie');
   const navigate = useNavigate();
 
-  if(favoriteMovies === null){
-    removeCookie("token");
-    navigate("/login");
-  }
+  useEffect(() => {
+    if(favoriteMovies === null){
+      removeCookie("token");
+      navigate("/login");
+    }
+  }, [favoriteMovies]);
 
   return (
     <>
