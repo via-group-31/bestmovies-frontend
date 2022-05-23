@@ -1,5 +1,5 @@
 import './App.css';
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, useNavigate } from 'react-router-dom';
 import MainPage from './pages/Main.page';
 import Navbar from './components/Navbar.component';
 import LoginPage from './pages/Login.page';
@@ -16,7 +16,14 @@ import SearchPage from './pages/Search.page';
 
 function App() {
 
-  const [cookie, setCookie, remvoeCookie] = useCookies(['token']);
+  const [cookie, setCookie, removeCookie] = useCookies(['token']);
+  const favoriteMovies = localStorage.getItem('favoriteMovie');
+  const navigate = useNavigate();
+
+  if(favoriteMovies === null){
+    removeCookie("token");
+    navigate("/login");
+  }
 
   return (
     <>
