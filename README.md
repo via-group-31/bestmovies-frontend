@@ -15,10 +15,10 @@
 - With each push to main app is built and uploaded to AZURE and app is refreshed
 
 ### Web Routes
-- [https://bestmovies-group-31.azurewebsites.net/login(https://bestmovies-group-31.azurewebsites.net/login) for Login as a user
-- [https://bestmovies-group-31.azurewebsites.net/register](https://bestmovies-group-31.azurewebsites.net/register) for Register and become user
-- [https://bestmovies-group-31.azurewebsites.net/movie:movieId](https://bestmovies-group-31.azurewebsites.net/movie:movieId) for Movie Detail with movieId parameter
-- [https://bestmovies-group-31.azurewebsites.net/person:personId](https://bestmovies-group-31.azurewebsites.net/person:personId) for Person Detail with personId parameter
-- [https://bestmovies-group-31.azurewebsites.net/search:movieName](https://bestmovies-group-31.azurewebsites.net/search:movieName) for Search with movieName parameter
-- [https://bestmovies-group-31.azurewebsites.net/favorite](https://bestmovies-group-31.azurewebsites.net/favorite) for Favorite movies (token in cookie required)
-- [https://bestmovies-group-31.azurewebsites.net/404](https://bestmovies-group-31.azurewebsites.net/404) any other as a 404 page
+- [/login](https://bestmovies-group-31.azurewebsites.net/login) for Login as a user
+- [/register](https://bestmovies-group-31.azurewebsites.net/register) for Register and become user
+- [/movie:movieId](https://bestmovies-group-31.azurewebsites.net/movie:movieId) for Movie Detail with movieId parameter
+- [/person:personId](https://bestmovies-group-31.azurewebsites.net/person:personId) for Person Detail with personId parameter
+- [/search:movieName](https://bestmovies-group-31.azurewebsites.net/search:movieName) for Search with movieName parameter
+- [/favorite](https://bestmovies-group-31.azurewebsites.net/favorite) for Favorite movies (token in cookie required)
+- [/404](https://bestmovies-group-31.azurewebsites.net/404) any other as a 404 page
