@@ -39,7 +39,7 @@ function MoviePage() {
   const [movieRating, setMovieRating] = useState<Rating | null>(null);
   const [movieRatingLoading, setMovieRatingLoadng] = useState(true);
 
-  const [reviews, setReviews] = useState<Review[]>([]);
+  const [apiReviews, setApiReviews] = useState<Review[]>([]);
   const [reviewsLoading, setReviewsLoading] = useState(true);
 
   const [favoriteMovie, setFavoriteMovie] = useState(false);
@@ -48,48 +48,34 @@ function MoviePage() {
   const [reviewToAdd, setReviewToAdd] = useState("");
   const [buttonLoading, setButtonLoading] = useState(false);
 
+  const [cookie, setCookie, removeCookie] = useCookies(["token"]);
+
   const movieService: MovieService = new MovieService();
   const ratingService: RatingService = new RatingService();
   const reviewService: ReviewService = new ReviewService();
   const userService: UserService = new UserService();
 
   useEffect(() => {
-    let mounted: boolean = true;
-
     movieService.getMoviesByMovieId(Number(movieId)).then((movie) => {
-      if (mounted && movie !== null) {
         setMovie(movie);
         setMovieLoading(false);
-      }
     });
 
     ratingService.getRatingByMovieId(Number(movieId)).then((rating) => {
-      if (mounted && rating !== null) {
         setMovieRating(rating);
         setMovieRatingLoadng(false);
-      }
     });
 
     reviewService.getReviewsByMovieId(Number(movieId)).then((reviews) => {
-      if (mounted) {
-        setReviews(reviews);
+        setApiReviews(reviews);
         setReviewsLoading(false);
-      }
     });
 
     userService.getFavoriteMovie(cookie.token, Number(movieId)).then((res) => {
-      if (mounted) {
         setFavoriteMovie(res);
         setFavoriteMovieLoading(false);
-      }
     });
-
-    return () => {
-      mounted = false;
-    };
   }, [movieId]);
-
-  const [cookie, setCookie, removeCookie] = useCookies(["token"]);
 
   const toggleFavorite = () => {
 
@@ -141,7 +127,7 @@ function MoviePage() {
       console.log(reviewModel.toJson());
       
       reviewService.addReview(cookie.token, reviewModel.toJson()).then(() => {
-        reviews.push(reviewModel);
+        apiReviews.push(reviewModel);
         setButtonLoading(false);
         setReviewToAdd("");
       });
@@ -295,7 +281,7 @@ function MoviePage() {
               {reviewsLoading ? (
                 <CircularProgress size={5} isIndeterminate color={skyBlue} />
               ) : (
-                `(${reviews.length} reviews)`
+                `(${apiReviews.length} reviews)`
               )}
             </Text>
           </Box>
@@ -312,7 +298,7 @@ function MoviePage() {
           }
 
           <Box>
-            {reviews.map((review, i) => (
+            {apiReviews.map((review, i) => (
               <Box
                 key={i}
                 p={3}
