@@ -48,6 +48,8 @@ function MoviePage() {
   const [reviewToAdd, setReviewToAdd] = useState("");
   const [buttonLoading, setButtonLoading] = useState(false);
 
+  const [cookie, setCookie, removeCookie] = useCookies(["token"]);
+
   const movieService: MovieService = new MovieService();
   const ratingService: RatingService = new RatingService();
   const reviewService: ReviewService = new ReviewService();
@@ -77,12 +79,25 @@ function MoviePage() {
       }
     });
 
+    if(cookie.token){
+      const favoriteMoviesLocalStorage = localStorage.getItem('favoriteMovie');
+      if(favoriteMoviesLocalStorage === null)
+        setFavoriteMovie(false);
+      else{
+        const favoriteMovieAsList: Movie[] = JSON.parse(favoriteMoviesLocalStorage!);
+        if(favoriteMovieAsList.some(movie => movie.movieId === Number(movieId)))
+          setFavoriteMovie(true);
+        else
+          setFavoriteMovie(false);
+
+        setFavoriteMovieLoading(false);
+      }
+    }
+
     return () => {
       mounted = false;
     };
   }, [movieId]);
-
-  const [cookie, setCookie, removeCookie] = useCookies(["token"]);
 
   const toggleFavorite = () => {
 
