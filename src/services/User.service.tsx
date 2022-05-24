@@ -90,16 +90,4 @@ export default class UserService{
             return false;
         }
     }
-
-    public async getFavoriteMovie(token: string, movieId: number): Promise<boolean>{
-        try{
-            const response = await axios.get(`${apiURL}/api/user/favoritesList?movieId=${movieId}`, { headers: { Authorization: `Bearer ${token}` }});
-            
-            if(response.status === 200)
-                return true;
-            return false;
-        } catch(error) {
-            return false;
-        }
-    }
 }

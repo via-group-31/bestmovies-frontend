@@ -77,13 +77,6 @@ function MoviePage() {
       }
     });
 
-    userService.getFavoriteMovie(cookie.token, Number(movieId)).then((res) => {
-      if (mounted) {
-        setFavoriteMovie(res);
-        setFavoriteMovieLoading(false);
-      }
-    });
-
     return () => {
       mounted = false;
     };
