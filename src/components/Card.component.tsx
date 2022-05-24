@@ -35,9 +35,9 @@ function Card(this: any,  props: CardProps){
                 </Box>
                 {/* Delete icon */}
 
-                <Box mt="-4">
-                    <Text fontSize="4xl" color="black" fontWeight="bold" textTransform="capitalize">
-                    {props.title}  
+                <Box mt="-4" mr='2'>
+                    <Text fontSize={props.title.length > 30 ? "md" : "lg"} color="black" fontWeight="bold" textTransform="capitalize">
+                        {props.title}  
                     </Text>
                 </Box>
                 
