@@ -55,6 +55,13 @@ jobs:
         name: node-app
         path: build
 
+    - name: Deploy to gh-pages
+      uses: JamesIves/github-pages-deploy-action@v4.3.3
+      with:
+        token: ${{ secrets.GH_PAT }}
+        branch: gh-pages
+        folder: build  
+
   deploy:
     permissions:
       contents: none
