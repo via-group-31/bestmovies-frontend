@@ -44,10 +44,10 @@ jobs:
         yarn install
         CI=false yarn build
     
-    - name: Deploy to pages
+    - name: Deploy to gh-pages
       uses: JamesIves/github-pages-deploy-action@v4.3.3
       with:
-        token: ${{ secrets.ACCESS_TOKEN }}
+        token: ${{ secrets.GH_PAT }}
         branch: gh-pages  # The branch the action should deploy to.
         folder: build     # The folder the action should deploy.
 
