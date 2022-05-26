@@ -20,7 +20,7 @@ function Card(this: any,  props: CardProps){
    
       return (
             <Box maxW='sm' borderRadius='lg' overflow='hidden' >
-            <Image width="100%" height="100%" objectFit="cover" src={
+            <Image width="100%" height="300px" objectFit="cover" src={
                props.image === "N/A"
                   ? `${process.env.PUBLIC_URL}/assets/images.jpg`
                   : props.image
